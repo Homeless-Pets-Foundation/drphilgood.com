@@ -1,0 +1,14 @@
+.env
+.mcp.json
+*.log
+.playwright-mcp/
+node_modules/
+
+# BackstopJS test outputs (baselines are tracked, test diffs are not)
+audit/backstop/test/
+audit/backstop/report/
+audit/backstop/ci/
+
+# Plugin zips (download fresh from dist/)
+*.zip
+*.zip:Zone.Identifier
