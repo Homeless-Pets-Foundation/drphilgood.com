@@ -143,6 +143,58 @@ For each page or major section:
 - **`create-template` has a bug** — use `bricks/execute-php` with `wp_insert_post` instead.
 - **`execute-php` blocks many functions** — `file_get_contents`, `array_filter`, `fopen`, `wp_remote_get` all blocked. Stage data via `manage-options` + `get_option()`.
 
+## Updating the Bricks MCP Plugin
+
+**CRITICAL: NEVER deactivate or delete the plugin via the WP REST API.** The plugin updates itself in-place using `bricks/update-plugin`. Deleting it removes the MCP endpoint and you lose all remote management ability.
+
+### Steps
+
+1. **Build the zip** (from `/home/philgood/projects/bricks-MCP`):
+   ```
+   php -l includes/class-workflow-tools.php   # lint changed files
+   vendor/bin/phpunit --testdox               # 6 known failures in manage-options/execute-php
+   bash build.sh                              # outputs dist/brickslabs-bricks-mcp-X.Y.Z.zip
+   ```
+
+2. **Initialize an MCP session** — every call needs a session ID:
+   ```
+   AUTH=$(echo -n "philgood:$(grep BRICKS_MCP_PASS .env | cut -d= -f2)" | base64)
+   curl -s -D - -X POST "https://drphilgood.com/wp-json/bricks-mcp/v1/mcp" \
+     -H "Authorization: Basic $AUTH" \
+     -H "Content-Type: application/json" \
+     -d '{"jsonrpc":"2.0","method":"initialize","params":{"protocolVersion":"2025-03-26","capabilities":{},"clientInfo":{"name":"cli-updater","version":"1.0"}},"id":0}'
+   ```
+   Copy the `Mcp-Session-Id` response header.
+
+3. **Upload the plugin** via base64-encoded zip (too large for inline curl):
+   ```
+   base64 -w0 dist/brickslabs-bricks-mcp-X.Y.Z.zip > /tmp/plugin-b64.txt
+
+   python3 -c "
+   import json
+   with open('/tmp/plugin-b64.txt') as f: b64 = f.read().strip()
+   payload = {'jsonrpc':'2.0','method':'tools/call','params':{'name':'bricks/update-plugin','arguments':{'zip_base64':b64}},'id':999}
+   with open('/tmp/plugin-upload.json','w') as f: json.dump(payload, f)
+   "
+
+   curl -s -X POST "https://drphilgood.com/wp-json/bricks-mcp/v1/mcp" \
+     -H "Authorization: Basic $AUTH" \
+     -H "Content-Type: application/json" \
+     -H "Mcp-Session-Id: YOUR_SESSION_ID" \
+     -d @/tmp/plugin-upload.json --max-time 120
+   ```
+   Success: `{"success": true, "message": "Plugin updated successfully.", "new_version": "X.Y.Z"}`
+
+4. **Verify** — re-initialize and check `serverInfo.version`.
+
+5. **Clean up**: `rm -f /tmp/plugin-b64.txt /tmp/plugin-upload.json`
+
+### Troubleshooting
+- **Missing Mcp-Session-Id** → run initialize first (step 2)
+- **Argument list too long** → use `-d @file` not inline base64
+- **Old version still shows** → PHP opcache; wait 30-60s or restart PHP-FPM
+- **Session ID stops working** → re-run step 2 for a fresh session
+
 ## WordPress Credentials
 
 - **Site URL:** https://drphilgood.com
