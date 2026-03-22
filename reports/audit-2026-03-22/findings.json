@@ -1,0 +1,301 @@
+{
+  "audit": {
+    "date": "2026-03-22",
+    "site": "https://drphilgood.com",
+    "overall_score": 62,
+    "score_threshold": "Fair (60-74)",
+    "pages_audited": 6,
+    "breakpoints_tested": ["1440x900", "768x1024", "375x812"]
+  },
+  "category_scores": {
+    "A_layout_structure": { "score": 15, "max": 20 },
+    "B_hero_first_impression": { "score": 12, "max": 15 },
+    "C_typography_readability": { "score": 8, "max": 15 },
+    "D_color_visual_design": { "score": 8, "max": 10 },
+    "E_responsive_mobile": { "score": 11, "max": 15 },
+    "F_ctas_conversion": { "score": 8, "max": 10 },
+    "G_accessibility": { "score": 8, "max": 10 },
+    "H_performance": { "score": 5, "max": 5 }
+  },
+  "findings": [
+    {
+      "id": "F-001",
+      "severity": "critical",
+      "category": "E_responsive_mobile",
+      "pages": ["home", "about", "practice", "rescue", "legacy", "contact"],
+      "title": "51 content elements invisible due to broken scroll-reveal animations",
+      "description": "Bricks scroll_into_view interactions with add_css_class action fail to trigger reliably. Card elements, timeline entries, stat counters, and entire sections start at opacity: 0 and never receive the reveal class. Affected: Home (6 cards), About (7 elements), Practice (11 elements), Rescue (14 elements), Legacy (8 elements), Contact (5 elements).",
+      "recommendation": "Remove scroll_into_view interactions from all affected elements and set opacity: 1 as default. If animations are desired, implement CSS-only approach with @keyframes and IntersectionObserver that has a fallback of opacity: 1.",
+      "effort": "high",
+      "evidence": {
+        "home_service_cards": ["brxe-svc11", "brxe-svc12", "brxe-svc13"],
+        "home_testimonial_cards": ["brxe-tst11", "brxe-tst12", "brxe-tst13"],
+        "about_timeline": ["brxe-at11", "brxe-at12", "brxe-at13", "brxe-at14", "brxe-at15"],
+        "about_sections": ["brxe-ao01", "brxe-ab01"],
+        "practice_why_us": ["brxe-pw11", "brxe-pw12", "brxe-pw13"],
+        "practice_services": ["brxe-ps11", "brxe-ps12", "brxe-ps13", "brxe-ps14", "brxe-ps15", "brxe-ps16"],
+        "practice_location": ["brxe-pl01"],
+        "rescue_stats": ["brxe-rm11", "brxe-rm12", "brxe-rm13", "brxe-rm14"],
+        "rescue_process": ["brxe-rp11", "brxe-rp12", "brxe-rp13", "brxe-rp14"],
+        "rescue_action_cards": ["brxe-rr11", "brxe-rr12", "brxe-rr13", "brxe-rr14"],
+        "rescue_section": ["brxe-rr01"],
+        "legacy_timeline": ["brxe-lt11", "brxe-lt12", "brxe-lt13", "brxe-lt14", "brxe-lt15", "brxe-lt16"],
+        "legacy_section": ["brxe-lf01"],
+        "contact_cards": ["brxe-cc11", "brxe-cc13", "brxe-cc14"],
+        "contact_map": ["brxe-cm01"]
+      }
+    },
+    {
+      "id": "F-002",
+      "severity": "critical",
+      "category": "C_typography_readability",
+      "pages": ["home", "about", "practice", "rescue", "legacy", "contact"],
+      "title": "Custom font (Plus Jakarta Sans) only applies to H1 headings",
+      "description": "All H2-H6 headings render in -apple-system (system font fallback) instead of Plus Jakarta Sans. The @font-face declaration or CSS selector for the custom font only targets H1 elements. This creates visual inconsistency where the most prominent heading uses the brand font but all sub-headings use a generic system font.",
+      "recommendation": "Audit the CSS font-family declarations. Ensure Plus Jakarta Sans is applied to h1, h2, h3, h4, h5, h6 selectors. Check that the font weights (700, 800) are loaded for all needed variants.",
+      "effort": "medium",
+      "evidence": {
+        "h1_font": "Plus Jakarta Sans",
+        "h2_font": "-apple-system",
+        "h3_font": "-apple-system",
+        "h4_font": "-apple-system"
+      }
+    },
+    {
+      "id": "F-003",
+      "severity": "high",
+      "category": "C_typography_readability",
+      "pages": ["home", "about", "practice", "rescue", "legacy", "contact"],
+      "title": "H1 font size 33% undersized vs. design spec",
+      "description": "H1 renders at 42.6px on desktop (design spec: 64px), 34.6px on tablet (spec: 42px), and 28.5px on mobile. The display heading doesn't have the visual impact intended by the design system.",
+      "recommendation": "Update H1 font-size to 64px desktop, 48px tablet, 32px mobile via ACSS or Bricks global styles.",
+      "effort": "low",
+      "evidence": {
+        "desktop_actual": "42.6px",
+        "desktop_target": "64px",
+        "tablet_actual": "34.6px",
+        "tablet_target": "42px",
+        "mobile_actual": "28.5px"
+      }
+    },
+    {
+      "id": "F-004",
+      "severity": "high",
+      "category": "C_typography_readability",
+      "pages": ["home", "about", "practice", "rescue", "legacy", "contact"],
+      "title": "H2 and H3 font sizes don't match design spec",
+      "description": "H2 renders at 32px (spec: 40px, 20% undersized). H3 renders at 24px (CLAUDE.md claims standardized to 20px but actual is 24px).",
+      "recommendation": "Update H2 to 40px and decide on H3 target (20px per spec or keep 24px).",
+      "effort": "low",
+      "evidence": {
+        "h2_actual": "31.98px",
+        "h2_target": "40px",
+        "h3_actual": "23.99px",
+        "h3_claimed": "20px"
+      }
+    },
+    {
+      "id": "F-005",
+      "severity": "high",
+      "category": "B_hero_first_impression",
+      "pages": ["home"],
+      "title": "2 images on Home page stuck as SVG placeholders",
+      "description": "The 'Happy adopted dogs from the Homeless Pets Foundation' image (rescue section) and 'Dr. Michael Good' image (legacy section) render as tiny SVG placeholder squares (~241x150 and ~157x150) instead of actual photographs. Lazy loading appears to fail for these below-fold images.",
+      "recommendation": "Check the src attributes of these images. Ensure proper img src URLs are set (not just SVG placeholder data URIs). Consider adding loading='eager' or preloading critical images.",
+      "effort": "low",
+      "evidence": {
+        "rescue_dogs_img": { "naturalWidth": 241, "naturalHeight": 150, "format": "svg placeholder" },
+        "dr_michael_img": { "naturalWidth": 157, "naturalHeight": 150, "format": "svg placeholder" }
+      }
+    },
+    {
+      "id": "F-006",
+      "severity": "high",
+      "category": "B_hero_first_impression",
+      "pages": ["practice"],
+      "title": "Practice page has zero images",
+      "description": "My Practice (/my-practice/) has no images at all — no hero image, no section images. All other pages have at least one photograph. For a veterinary hospital page, images of the facility, staff, or animals would significantly improve engagement.",
+      "recommendation": "Add a hero image (hospital exterior or exam room) and consider images in the services or location sections.",
+      "effort": "medium"
+    },
+    {
+      "id": "F-007",
+      "severity": "high",
+      "category": "C_typography_readability",
+      "pages": ["home", "about", "practice", "rescue", "legacy", "contact"],
+      "title": "Tablet H1 responsive override not working",
+      "description": "CLAUDE.md states tablet H1 should be 42px but actual measurement is 34.6px across all inner pages. The responsive CSS override either has incorrect breakpoint targeting or insufficient specificity.",
+      "recommendation": "Check the media query breakpoint for the H1 tablet override. Bricks tablet breakpoint is 991px (not 768px). Ensure the selector has sufficient specificity.",
+      "effort": "low",
+      "evidence": {
+        "tablet_actual": "34.6px",
+        "tablet_target": "42px"
+      }
+    },
+    {
+      "id": "F-008",
+      "severity": "medium",
+      "category": "E_responsive_mobile",
+      "pages": ["home", "about", "practice", "rescue", "legacy", "contact"],
+      "title": "15-23 touch targets per page below 48px minimum on mobile",
+      "description": "Multiple interactive elements fall below the 48px WCAG minimum touch target size on mobile. Common offenders: logo link (21px height), footer social icons (36px), inline text links like 'Read My Full Story →' (18-20px height), phone number links (20-24px height).",
+      "recommendation": "Add padding to increase touch target areas without changing visual size. Use min-height: 48px on all interactive mobile elements.",
+      "effort": "low",
+      "evidence": {
+        "logo_link_height": "21px",
+        "social_icon_height": "36px",
+        "text_link_height": "18-20px",
+        "worst_page": "contact (23 undersized targets)"
+      }
+    },
+    {
+      "id": "F-009",
+      "severity": "medium",
+      "category": "A_layout_structure",
+      "pages": ["about"],
+      "title": "Raw Unicode character '201C' visible in Philosophy section",
+      "description": "The pull-quote/philosophy section on the About page displays a raw '201C' text string (the Unicode code for a left double quotation mark) instead of rendering the actual quotation mark character.",
+      "recommendation": "Replace the raw Unicode reference with the proper HTML entity &ldquo; or the actual character.",
+      "effort": "low"
+    },
+    {
+      "id": "F-010",
+      "severity": "medium",
+      "category": "C_typography_readability",
+      "pages": ["home", "about", "practice", "rescue", "legacy", "contact"],
+      "title": "5 font families detected instead of target 2-3",
+      "description": "Computed styles show Times New Roman, -apple-system, Plus Jakarta Sans, Inter, and Georgia in use. Best practice for biography websites is 2-3 font families maximum (one display, one body, optionally one accent).",
+      "recommendation": "Audit all CSS for stray font-family declarations. Remove Times New Roman and Georgia references. Ensure only Plus Jakarta Sans (headings) and Inter (body) are used.",
+      "effort": "low",
+      "evidence": {
+        "fonts_detected": ["Times New Roman", "-apple-system", "Plus Jakarta Sans", "Inter", "Georgia"]
+      }
+    },
+    {
+      "id": "F-011",
+      "severity": "medium",
+      "category": "C_typography_readability",
+      "pages": ["about"],
+      "title": "Line length exceeds 75 characters on About page",
+      "description": "Hero paragraph and timeline text reach 89-91 estimated characters per line, exceeding the 50-75 character best practice for readable body text.",
+      "recommendation": "Add max-width: 680px to prose text containers on the About page.",
+      "effort": "low",
+      "evidence": {
+        "hero_paragraph_chars": 91,
+        "timeline_text_chars": 89
+      }
+    },
+    {
+      "id": "F-012",
+      "severity": "medium",
+      "category": "F_ctas_conversion",
+      "pages": ["contact"],
+      "title": "Contact hero section has no CTA button",
+      "description": "The Contact page hero only contains an overline, H1 'Get in Touch', and one line of text. No CTA button is present above the fold. The contact information cards below are invisible (broken reveals), leaving visitors with no clear action to take.",
+      "recommendation": "Add a 'Call Now' or 'Schedule a Visit' CTA button to the contact hero section.",
+      "effort": "low"
+    },
+    {
+      "id": "F-013",
+      "severity": "medium",
+      "category": "D_color_visual_design",
+      "pages": ["home"],
+      "title": "Ghost button borders barely visible on dark backgrounds",
+      "description": "The 'Learn Our Story' and 'Contact Us' ghost buttons on the Home page have subtle white borders that are hard to distinguish on the dark gradient backgrounds.",
+      "recommendation": "Increase ghost button border width to 2px or increase border opacity for dark background contexts.",
+      "effort": "low"
+    },
+    {
+      "id": "F-014",
+      "severity": "low",
+      "category": "A_layout_structure",
+      "pages": ["home"],
+      "title": "No nav active state on Home page",
+      "description": "The Home page doesn't have a 'Home' nav link and no nav item is highlighted as active. All other pages show the correct blue underline on the current nav item.",
+      "recommendation": "Either add 'Home' to the nav items or highlight the logo as the active indicator on the home page.",
+      "effort": "low"
+    },
+    {
+      "id": "F-015",
+      "severity": "low",
+      "category": "A_layout_structure",
+      "pages": ["rescue"],
+      "title": "Rescue hero overline inconsistent with nav label",
+      "description": "The Rescue page hero shows overline 'HOMELESS PETS FOUNDATION' but the nav label is 'Rescue' and the page is titled 'Rescue & Community'. This creates a naming inconsistency.",
+      "recommendation": "Change overline to 'RESCUE & COMMUNITY' to match the nav label and page context.",
+      "effort": "low"
+    },
+    {
+      "id": "F-016",
+      "severity": "low",
+      "category": "G_accessibility",
+      "pages": ["home", "about", "practice", "rescue", "legacy", "contact"],
+      "title": "Focus indicator color is coral/red instead of standard blue",
+      "description": "Keyboard focus outlines use coral/red (#E56C70) which, while visible, may confuse users who associate red with errors. The nav active state uses blue (#1E40AF).",
+      "recommendation": "Change focus outline color to blue (#1E40AF) to match the active state, or use a standard focus color.",
+      "effort": "low"
+    },
+    {
+      "id": "F-017",
+      "severity": "low",
+      "category": "B_hero_first_impression",
+      "pages": ["home"],
+      "title": "Home H1 doesn't mention Dr. Phil Good by name",
+      "description": "The Home page H1 is 'Compassionate Care for Every Animal' which is descriptive but doesn't feature the personal brand name. For a biography website, the subject's name in the H1 helps with SEO and personal branding.",
+      "recommendation": "Consider incorporating the name: 'Dr. Phil Good: Compassionate Care for Every Animal' or similar.",
+      "effort": "low"
+    },
+    {
+      "id": "F-018",
+      "severity": "low",
+      "category": "D_color_visual_design",
+      "pages": ["contact"],
+      "title": "Contact page H3 labels are light gray on white",
+      "description": "Contact section H3 headings (Address, Hours, Online) use #94A3B8 (light gray) which, while passing WCAG contrast minimums, appears washed out compared to the dark #1F2937 H3s used on other pages.",
+      "recommendation": "Darken Contact H3s to #64748B for consistent visual weight.",
+      "effort": "low"
+    },
+    {
+      "id": "F-019",
+      "severity": "low",
+      "category": "F_ctas_conversion",
+      "pages": ["home", "about", "rescue", "legacy"],
+      "title": "Text-style links lack button affordance",
+      "description": "'Read My Full Story →', 'Learn More →', 'Explore Our Full Story →', and similar arrow links are styled as plain text links (no background, no border) making them easy to miss as call-to-action elements.",
+      "recommendation": "Consider upgrading these to secondary button styles or adding underline-on-hover effects for better visibility.",
+      "effort": "low"
+    }
+  ],
+  "performance_metrics": {
+    "home": { "domContentLoaded": 1200, "loadComplete": 1866, "transferSize": "43KB" },
+    "about": { "domContentLoaded": 959, "loadComplete": 1436 },
+    "practice": { "domContentLoaded": 1225, "loadComplete": 1764 },
+    "rescue": { "domContentLoaded": 984, "loadComplete": 1532 },
+    "legacy": { "domContentLoaded": 975, "loadComplete": 1714 },
+    "contact": { "domContentLoaded": 799, "loadComplete": 1336 }
+  },
+  "heading_analysis": {
+    "h1": { "font_size": "42.6px", "target": "64px", "font": "Plus Jakarta Sans", "status": "undersized" },
+    "h2": { "font_size": "32px", "target": "40px", "font": "-apple-system (fallback)", "status": "undersized + wrong font" },
+    "h3": { "font_size": "24px", "target": "20px", "font": "-apple-system (fallback)", "status": "oversized + wrong font" },
+    "h4": { "font_size": "18px", "font": "-apple-system (fallback)", "status": "wrong font" }
+  },
+  "responsive_summary": {
+    "desktop_1440": { "h1": "42.6px", "overflow": false, "nav": "visible" },
+    "tablet_768": { "h1": "34.6px", "overflow": false, "hamburger": true, "nav_hidden": true },
+    "mobile_375": { "h1": "28.5px", "overflow": false, "hamburger": true, "hero_stacks": true, "cta_stacks": true, "footer_stacks": true }
+  },
+  "accessibility_summary": {
+    "skip_links": true,
+    "heading_hierarchy": "correct (no skips)",
+    "image_alt_text": "present on all images",
+    "keyboard_focus_visible": true,
+    "focus_color": "#E56C70 (coral)",
+    "tab_order": "correct",
+    "keyboard_traps": false,
+    "tel_links": true,
+    "aria_landmarks": ["banner", "navigation", "main", "contentinfo"],
+    "console_errors": 0,
+    "console_warnings": 0
+  }
+}

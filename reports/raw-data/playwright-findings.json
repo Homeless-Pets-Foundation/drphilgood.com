@@ -1,0 +1,124 @@
+{
+  "audit_date": "2026-03-20",
+  "access_method": "Pages temporarily published, then reverted to draft after screenshots",
+  "viewports_tested": [
+    {"name": "desktop", "width": 1440, "height": 900},
+    {"name": "tablet_portrait", "width": 1024, "height": 768},
+    {"name": "mobile_portrait", "width": 478, "height": 844}
+  ],
+  "landing_page": {
+    "post_id": 1777,
+    "url": "https://drphilgood.com/ux-audit-demo-landing-page/",
+    "performance": {
+      "desktop": {
+        "domContentLoaded_ms": 1436,
+        "domComplete_ms": 2131,
+        "transferSize_bytes": 38458
+      }
+    },
+    "heading_structure": {
+      "h1_count": 1,
+      "h1_text": "Build a modern, conversion-focused landing page for this business",
+      "h1_is_brief_text": true,
+      "hierarchy_valid": true,
+      "heading_count": 14,
+      "headings": [
+        {"tag": "H1", "text": "Build a modern, conversion-focused landing page for this business", "fontSize": "42.6px", "color": "rgb(51, 65, 85)"},
+        {"tag": "H2", "text": "Social Proof Bar", "fontSize": "32px"},
+        {"tag": "H2", "text": "Problem", "fontSize": "32px"},
+        {"tag": "H2", "text": "Solution Features", "fontSize": "32px"},
+        {"tag": "H3", "text": "A problem/pain", "fontSize": "24px"},
+        {"tag": "H3", "text": "A how", "fontSize": "24px"},
+        {"tag": "H3", "text": "A testimonial section with 2", "fontSize": "24px"},
+        {"tag": "H2", "text": "Testimonials", "fontSize": "32px"},
+        {"tag": "H2", "text": "Details", "fontSize": "32px"},
+        {"tag": "H2", "text": "Final Cta", "fontSize": "32px"},
+        {"tag": "H3", "text": "Dr. Phil Good, DVM (footer)", "fontSize": "24px"},
+        {"tag": "H4", "text": "Quick Links (footer)", "fontSize": "18px"},
+        {"tag": "H4", "text": "Contact (footer)", "fontSize": "18px"},
+        {"tag": "H4", "text": "Links (footer)", "fontSize": "18px"}
+      ]
+    },
+    "images": {
+      "total": 1,
+      "content_images": 0,
+      "logo_only": true,
+      "missing_alt": 0,
+      "oversized": false,
+      "images": [
+        {"src": "beyondpetspng.png", "alt": "Beyond Pets Animal Hospital logo", "naturalW": 848, "naturalH": 240, "displayW": 141, "displayH": 40}
+      ]
+    },
+    "sections": {
+      "count": 8,
+      "all_padding_120px": true,
+      "monotonous_rhythm": true,
+      "bg_alternation": ["rgb(30, 58, 95)", "rgb(241, 245, 249)", "rgb(248, 250, 252)", "rgb(241, 245, 249)", "rgb(248, 250, 252)", "rgb(241, 245, 249)", "rgb(248, 250, 252)"],
+      "section_heights": [485, 444, 278, 495, 549, 278, 414]
+    },
+    "overflow": false,
+    "buttons": [
+      {"text": "Get Started", "note": "rendered as div, not styled as button"},
+      {"text": "Contact Us", "note": "rendered as div"}
+    ],
+    "small_text": [],
+    "console_errors": 0
+  },
+  "service_page": {
+    "post_id": 1779,
+    "url": "https://drphilgood.com/ux-audit-demo-service-detail/",
+    "performance": {
+      "desktop": {
+        "domContentLoaded_ms": 1302,
+        "domComplete_ms": 2459,
+        "transferSize_bytes": 38217
+      }
+    },
+    "heading_structure": {
+      "h1_count": 1,
+      "h1_text": "Build a content-rich service detail page",
+      "h1_is_brief_text": true,
+      "hierarchy_valid": true,
+      "heading_count": 12,
+      "headings": [
+        {"tag": "H1", "text": "Build a content-rich service detail page", "fontSize": "42.6px"},
+        {"tag": "H2", "text": "Social Proof Bar", "fontSize": "32px"},
+        {"tag": "H2", "text": "Problem", "fontSize": "32px"},
+        {"tag": "H2", "text": "Solution Features", "fontSize": "32px"},
+        {"tag": "H3", "text": "An FAQ section with 5", "fontSize": "24px"},
+        {"tag": "H2", "text": "Testimonials", "fontSize": "32px"},
+        {"tag": "H2", "text": "Details", "fontSize": "32px"},
+        {"tag": "H2", "text": "Final Cta", "fontSize": "32px"}
+      ]
+    },
+    "images": {
+      "total": 1,
+      "content_images": 0,
+      "logo_only": true,
+      "missing_alt": 0
+    },
+    "sections": {
+      "count": 8,
+      "all_padding_120px": true,
+      "monotonous_rhythm": true,
+      "bg_alternation": ["rgb(30, 58, 95)", "rgb(241, 245, 249)", "rgb(248, 250, 252)", "rgb(241, 245, 249)", "rgb(248, 250, 252)", "rgb(241, 245, 249)", "rgb(248, 250, 252)"],
+      "section_heights": [387, 444, 278, 495, 813, 278, 414]
+    },
+    "overflow": false,
+    "console_errors": 0
+  },
+  "cross_viewport_findings": {
+    "tablet": {
+      "nav_contact_link_hidden": true,
+      "hero_text_readable": true,
+      "sections_still_empty": true
+    },
+    "mobile": {
+      "hamburger_nav_present": true,
+      "hero_heading_readable": true,
+      "stats_truncated": "4th stat column hidden on landing (only 3 of 4 visible)",
+      "sections_still_empty": true,
+      "massive_whitespace": "Sections with placeholder text have huge empty space below"
+    }
+  }
+}

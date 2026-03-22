@@ -1,0 +1,58 @@
+{
+  "audit_date": "2026-03-20",
+  "mcp_connection": {
+    "method": "REST API (not in .mcp.json, connected via curl)",
+    "endpoint": "https://drphilgood.com/wp-json/bricks-mcp/v1/mcp",
+    "session_id": "bdfa249b-812b-4c84-9765-362791499775",
+    "server_version": "1.8.9",
+    "protocol_version": "2024-11-05",
+    "total_tools": 89
+  },
+  "environment": {
+    "wordpress_version": "6.9.4",
+    "php_version": "8.4.18",
+    "bricks_version": "2.3",
+    "mcp_plugin_version": "1.8.9",
+    "site_url": "https://drphilgood.com",
+    "permalink_structure": "/%postname%/"
+  },
+  "active_plugins": [
+    {"name": "Automatic.css", "version": "3.3.6"},
+    {"name": "Bricks Advanced Themer", "version": "3.3.14"},
+    {"name": "Rank Math", "version": "1.0.266.1"},
+    {"name": "BricksExtras", "version": "1.6.8"}
+  ],
+  "css_framework": {
+    "detected": true,
+    "framework": "Automatic.css",
+    "version": "3.3.6",
+    "color_families": ["primary", "secondary", "tertiary", "accent", "base", "neutral", "shade"],
+    "spacing_scales": ["section_spacing", "content_spacing", "padding", "margin"],
+    "typography_scales": ["heading_sizes", "text_sizes", "font_families", "line_heights"],
+    "layout_tokens": ["container", "grid"],
+    "utility_classes": ["layout", "spacing", "typography", "background", "buttons", "visibility"]
+  },
+  "site_style_memory": {
+    "status": "not_configured",
+    "note": "build-page-from-brief with reuse_design_system:true will lack brand color/CTA guidance"
+  },
+  "pages": [
+    {"id": 1684, "title": "Bricks #1684", "status": "draft", "elements": 164},
+    {"id": 1724, "title": "Builder Test Page", "status": "draft", "elements": 30},
+    {"id": 1748, "title": "Rescue & Community", "status": "publish", "elements": 62},
+    {"id": 1749, "title": "Our Legacy", "status": "publish", "elements": 63},
+    {"id": 1750, "title": "Contact", "status": "publish", "elements": 35},
+    {"id": 1746, "title": "About Me", "status": "publish", "elements": 39},
+    {"id": 1747, "title": "My Practice", "status": "publish", "elements": 52},
+    {"id": 1581, "title": "Home", "status": "publish", "elements": 50},
+    {"id": 770, "title": "News", "status": "publish", "elements": 16}
+  ],
+  "viewports": [
+    {"name": "desktop", "width": 1440, "height": 900},
+    {"name": "tablet_portrait", "width": 1024, "height": 768},
+    {"name": "mobile_landscape", "width": 768, "height": 640},
+    {"name": "mobile_portrait", "width": 478, "height": 844}
+  ],
+  "playwright_tools_available": true,
+  "bricks_mcp_tools_available_via": "REST API"
+}

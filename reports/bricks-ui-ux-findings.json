@@ -1,404 +1,176 @@
 {
-  "auditDate": "2026-03-20",
-  "site": "https://drphilgood.com",
-  "auditor": "Claude Code (Opus 4.6) via Playwright MCP",
-  "pagesAudited": [
+  "audit_meta": {
+    "date": "2026-03-20",
+    "audit_version": 2,
+    "bricks_version": "2.3",
+    "mcp_plugin_version": "1.8.9",
+    "css_framework": "Automatic.css 3.3.6",
+    "mcp_connection_method": "REST API via curl (not in .mcp.json)",
+    "total_mcp_tools": 89,
+    "pages": [
+      {"id": 1777, "title": "UX Audit Demo – Landing Page", "slug": "ux-audit-demo-landing-page", "status": "draft"},
+      {"id": 1779, "title": "UX Audit Demo – Service Detail", "slug": "ux-audit-demo-service-detail", "status": "draft"}
+    ],
+    "viewports": [
+      {"name": "desktop", "width": 1440, "height": 900},
+      {"name": "tablet_portrait", "width": 1024, "height": 768},
+      {"name": "mobile_portrait", "width": 478, "height": 844}
+    ]
+  },
+  "brief_fidelity": {
+    "pages_are_unique": false,
+    "brief_rendered_as_content": true,
+    "brand_colors_used": false,
+    "cta_text_matches": false,
+    "sections_requested_vs_generated": {
+      "landing": {"requested": 8, "generated": 7, "matched_brief": 0},
+      "service": {"requested": 6, "generated": 7, "matched_brief": 0}
+    },
+    "content_images_count": 0
+  },
+  "scores": {
+    "landing": {
+      "design_build_time": 25,
+      "design_validate": 0,
+      "hero": 78,
+      "polish_initial": 76,
+      "polish_after_loop": 100
+    },
+    "service": {
+      "design_build_time": 29,
+      "design_validate": 1,
+      "hero": 78,
+      "polish_initial": 84,
+      "polish_after_loop": 100
+    }
+  },
+  "critical_failures": [
     {
-      "title": "Home",
-      "url": "/",
-      "postId": 1581,
-      "role": "Landing page (hero, cards, stats, quote, CTA)"
+      "id": "CF-01",
+      "category": "content_generation",
+      "severity": "critical",
+      "title": "Brief instructions rendered as page content",
+      "description": "The build tool treated the brief text as literal content rather than a generation prompt. H1 tags contain the brief's opening instruction. Text elements contain numbered section descriptions. H3 elements contain brief fragments.",
+      "affected": ["landing_h1", "service_h1", "all_text_elements", "all_h3_elements"]
     },
     {
-      "title": "My Practice (Beyond Pets Animal Hospital)",
-      "url": "/my-practice/",
-      "postId": 1747,
-      "role": "Service detail page (hero, about, services, training, CTA)"
+      "id": "CF-02",
+      "category": "content_generation",
+      "severity": "critical",
+      "title": "Both pages have identical structure despite different briefs",
+      "description": "Both pages produced identical 7-section scaffolding: hero, social-proof-bar, problem, solution-features, testimonials, details, final-cta. 100% structural overlap. Landing requested 8 distinct sections, service requested 6 different sections.",
+      "affected": ["both_pages"]
+    },
+    {
+      "id": "CF-03",
+      "category": "content_generation",
+      "severity": "critical",
+      "title": "No real content generated — only scaffolding labels",
+      "description": "Section headings are generic labels ('Social Proof Bar', 'Problem', 'Solution Features', 'Details', 'Final Cta'). Body text is placeholder: 'Use this section to support the [name] narrative for the page.' No conversion copy, no brand messaging.",
+      "affected": ["all_sections_both_pages"]
+    },
+    {
+      "id": "CF-04",
+      "category": "media_pipeline",
+      "severity": "high",
+      "title": "Zero content images on either page",
+      "description": "Only image is header logo from template. Build tool did not invoke search-stock-images or import-stock-image. Hero image element has empty src.",
+      "affected": ["hero_image_landing", "hero_image_service"]
+    },
+    {
+      "id": "CF-05",
+      "category": "brand_compliance",
+      "severity": "high",
+      "title": "Site style memory not configured — no brand ground truth",
+      "description": "get-site-style-memory returns status:not_configured. reuse_design_system:true has no stored colors, CTA text, fonts, or style DNA to consume.",
+      "affected": ["design_system"]
     }
   ],
-  "viewportsAudited": [
-    { "name": "Desktop", "width": 1440, "height": 900 },
-    { "name": "Tablet", "width": 768, "height": 1024 },
-    { "name": "Mobile", "width": 390, "height": 844 }
+  "contrast_issues": [
+    {
+      "element": "Hero H1 text on dark background",
+      "severity": "medium",
+      "detail": "H1 color rgb(51,65,85) on hero bg rgb(30,58,95) — low contrast, estimated ~1.5:1. Fails WCAG AA.",
+      "note": "The heading is styled with the default dark text color on a dark hero background. The text appears very faint in screenshots."
+    }
   ],
-  "toolInventory": {
-    "bricksMCP": "NOT CONNECTED - zero Bricks/WordPress MCP tools available",
-    "playwrightMCP": "Full browser automation (navigate, screenshot, evaluate, snapshot, network, console)",
-    "otherMCPServers": ["Notion", "Gmail", "Google Calendar", "Trigger.dev", "VS Code IDE"]
+  "heading_structure": {
+    "landing": {
+      "h1_count": 1,
+      "rank_skips": false,
+      "h1_is_brief_text": true,
+      "all_visible": true,
+      "headings_are_meaningful": false,
+      "headings": ["H1: Build a modern, conversion-focused landing page...", "H2: Social Proof Bar", "H2: Problem", "H2: Solution Features", "H3: A problem/pain", "H3: A how", "H3: A testimonial section with 2", "H2: Testimonials", "H2: Details", "H2: Final Cta"]
+    },
+    "service": {
+      "h1_count": 1,
+      "rank_skips": false,
+      "h1_is_brief_text": true,
+      "all_visible": true,
+      "headings_are_meaningful": false,
+      "headings": ["H1: Build a content-rich service detail page", "H2: Social Proof Bar", "H2: Problem", "H2: Solution Features", "H3: An FAQ section with 5", "H2: Testimonials", "H2: Details", "H2: Final Cta"]
+    }
   },
-  "findings": {
-    "contrast": {
-      "status": "mostly-passing",
-      "details": [
-        {
-          "id": "CONTRAST-01",
-          "severity": "low",
-          "element": "Skip links (a.skip-link)",
-          "fgColor": "rgb(251, 233, 234)",
-          "bgColor": "rgb(229, 108, 112)",
-          "measuredRatio": 2.67,
-          "requiredRatio": 4.5,
-          "note": "Skip links are only visible on focus. Low priority but technically fails WCAG AA."
-        },
-        {
-          "id": "CONTRAST-02",
-          "severity": "info",
-          "element": "Hero text (H1, subtitle, description)",
-          "fgColor": "rgb(255, 255, 255)",
-          "actualBackground": "background-image with dark overlay",
-          "measuredRatio": "UNMEASURABLE - image background",
-          "note": "Programmatic contrast check returns 1:1 because it cannot see through CSS background-image overlays. Visual inspection shows white text on dark blue overlay over the clinic photo. Estimated contrast ratio is 7:1+ based on overlay darkness. PASSES AA visually but needs manual verification."
-        },
-        {
-          "id": "CONTRAST-03",
-          "severity": "pass",
-          "element": "Body text on white sections",
-          "fgColor": "rgb(51, 65, 85)",
-          "bgColor": "rgb(255, 255, 255)",
-          "measuredRatio": 7.58,
-          "note": "Passes WCAG AA (7.58:1)"
-        },
-        {
-          "id": "CONTRAST-04",
-          "severity": "pass",
-          "element": "H2/H3 headings on white sections",
-          "fgColor": "rgb(15, 23, 42)",
-          "bgColor": "rgb(255, 255, 255)",
-          "measuredRatio": 17.58,
-          "note": "Excellent contrast (17.58:1)"
-        },
-        {
-          "id": "CONTRAST-05",
-          "severity": "pass",
-          "element": "Primary CTA buttons (Learn My Story, Get in Touch)",
-          "fgColor": "rgb(255, 255, 255)",
-          "bgColor": "rgb(37, 99, 235)",
-          "measuredRatio": 5.17,
-          "note": "Passes WCAG AA (5.17:1)"
-        },
-        {
-          "id": "CONTRAST-06",
-          "severity": "pass",
-          "element": "Footer text on dark background",
-          "fgColor": "rgb(203, 213, 225)",
-          "bgColor": "rgb(15, 23, 42)",
-          "measuredRatio": 10.2,
-          "note": "Passes WCAG AA (10.2:1)"
-        }
-      ]
-    },
-    "headingStructure": {
-      "status": "good",
-      "homePage": {
-        "outline": [
-          "H1: Dr. Phil Good, DVM",
-          "  H2: What I Do",
-          "    H3: My Practice",
-          "    H3: Rescue Mission",
-          "    H3: Our Legacy",
-          "  H2: Let's Connect",
-          "  H3: Dr. Phil Good, DVM (footer)",
-          "    H4: Quick Links",
-          "    H4: Contact",
-          "    H4: Links"
-        ],
-        "issues": [
-          "Footer H3 ('Dr. Phil Good, DVM') should arguably be H2 for consistency, but H3 in footer is acceptable"
-        ]
-      },
-      "practicePageOutline": [
-        "H1: Beyond Pets Animal Hospital",
-        "  H2: A Practice Built on Family",
-        "  H2: Our Services",
-        "    H3: Wellness & Prevention",
-        "    H3: Internal Medicine",
-        "    H3: Surgery",
-        "    H3: Dentistry",
-        "    H3: Ultrasound & Diagnostics",
-        "    H3: Boarding & Grooming",
-        "  H2: Training the Next Generation",
-        "  H2: Schedule a Visit",
-        "  H3: Dr. Phil Good, DVM (footer)",
-        "    H4: Quick Links",
-        "    H4: Contact",
-        "    H4: Links"
-      ],
-      "practiceIssues": [
-        "Heading hierarchy is clean and logical",
-        "No skipped heading levels"
-      ]
-    },
-    "heroSections": {
-      "homePage": {
-        "status": "good-with-notes",
-        "headline": "Dr. Phil Good, DVM",
-        "subheadline": "Veterinarian · Rescue Advocate · Father",
-        "description": "Leading Beyond Pets Animal Hospital in Marietta, Georgia since 1979...",
-        "primaryCTA": "Learn My Story (blue, links to /about-me/)",
-        "secondaryCTA": "Book Appointment (outlined, links to beyondpets.com)",
-        "backgroundImage": "ClinicMainPic.jpg (clinic building exterior)",
-        "strengths": [
-          "Clear value proposition immediately visible",
-          "Two well-differentiated CTAs",
-          "Dark overlay ensures text readability",
-          "Good above-the-fold hierarchy"
-        ],
-        "weaknesses": [
-          "Background image (old clinic building sign) feels dated and not aspirational",
-          "Hero is very tall (100vh) - CTAs pushed below the fold on smaller desktop screens",
-          "Subtitle text at top is small relative to hero height",
-          "No professional photo of Dr. Good himself - missed personal branding opportunity"
-        ]
-      },
-      "practicePage": {
-        "status": "good",
-        "headline": "Beyond Pets Animal Hospital",
-        "subheadline": "Formerly Town & Country Veterinary Hospital · Serving Marietta Since 1979",
-        "backgroundImage": "ClinicMainPic.jpg (same as home)",
-        "strengths": [
-          "Clear page title",
-          "Subtitle establishes history/credibility"
-        ],
-        "weaknesses": [
-          "Same background image as home page - feels repetitive",
-          "No CTA buttons in hero",
-          "Hero has no interactive elements to encourage scroll"
-        ]
+  "performance": {
+    "landing": {
+      "desktop": {
+        "domContentLoaded_ms": 1436,
+        "domComplete_ms": 2131,
+        "transferSize_bytes": 38458,
+        "fcp_status": "pass (under 2.5s)",
+        "cls_status": "pass (0)"
       }
     },
-    "spacingAndLayout": {
-      "status": "good-with-notes",
-      "strengths": [
-        "Consistent section padding throughout",
-        "Body font 18px with 27px line height (1.5 ratio) - excellent readability",
-        "Max content width 1200px centered - good reading measure",
-        "Cards have consistent 12px border-radius and standardized shadows",
-        "8px grid appears to be followed"
-      ],
-      "weaknesses": [
-        "Home page cards stack vertically on desktop (single column) instead of 3-column grid - wastes horizontal space at 1440px",
-        "Large gaps between cards on desktop due to vertical stacking",
-        "Stats section (45+, 20000+, 1) is quite compact - could have more visual weight",
-        "Quote section has generous padding but the opening quote mark renders as '201C' unicode character instead of styled quotation mark"
-      ]
-    },
-    "typography": {
-      "status": "good",
-      "bodyFont": "18px / 27px (1.5 line height)",
-      "h1": "42.6px / bold 800",
-      "h2": "32px / bold 700",
-      "h3": "24px / bold 700",
-      "h4": "18px / semibold 600",
-      "navLinks": "15px",
-      "strengths": [
-        "Clear heading hierarchy with consistent sizing",
-        "Good body text size for readability",
-        "Font weight differentiation is clear"
-      ],
-      "weaknesses": [
-        "Nav link size (15px) is slightly small for a 1440px desktop viewport",
-        "Card 'Learn More' links at 14px are small for touch targets"
-      ]
-    },
-    "imageQuality": {
-      "status": "needs-improvement",
-      "details": [
-        {
-          "image": "ClinicMainPic.jpg",
-          "naturalSize": "unknown (loaded as background-image)",
-          "usage": "Hero background on both Home and My Practice pages",
-          "assessment": "Shows old 'Town & Country Veterinary Clinic' signage with cars in parking lot. Not aspirational. Reused across pages. No WebP/AVIF format detected.",
-          "recommendation": "Replace with professional photo. Use different images per page. Serve in modern formats."
-        },
-        {
-          "image": "beyondpetspng.png",
-          "naturalSize": "848x240",
-          "displaySize": "141x40",
-          "assessment": "Logo PNG - massively oversized for display (848px served for 141px display). No srcset or responsive sizing.",
-          "recommendation": "Serve appropriately sized logo. Consider SVG for better scaling."
-        },
-        {
-          "image": "Hero-image.jpg (My Practice page)",
-          "naturalSize": "1267x518",
-          "displaySize": "409x167",
-          "usage": "About section image on My Practice page",
-          "assessment": "Reasonable sizing but could use srcset for responsive delivery"
-        }
-      ]
-    },
-    "performance": {
-      "status": "good",
-      "metrics": {
-        "firstContentfulPaint": "1724ms",
-        "firstPaint": "1724ms",
-        "resourceCount": 35,
-        "totalTransferSize": "~85KB (compressed)",
-        "htmlSize": "39KB compressed / 144KB decompressed",
-        "consoleErrors": 0
-      },
-      "vsTargets": {
-        "LCP": "~1.7s (estimated from FCP, well under 2.5s target - PASSES)",
-        "INP": "Not measurable via single-page audit (would need real user interaction)",
-        "CLS": "No visible layout shifts observed during audit"
-      },
-      "strengths": [
-        "Fast FCP under 2 seconds",
-        "Good compression ratio on HTML (3.7:1)",
-        "No console errors",
-        "Zero horizontal overflow on all viewports"
-      ],
-      "weaknesses": [
-        "15+ third-party scripts loaded (GSAP, ScrollTrigger, ScrollSmoother, Swup, New Relic, Google Analytics, BricksForge, BricksExtras)",
-        "Swup page transition library loaded regardless of whether transitions are used",
-        "New Relic SPA agent is heavy for a brochure site",
-        "Multiple GSAP/Swup sub-libraries loaded individually rather than bundled",
-        "Logo PNG (848x240) served for 141x40 display",
-        "No preload hints visible for hero background image"
-      ]
-    },
-    "responsiveness": {
-      "status": "good",
-      "horizontalOverflow": {
-        "desktop": false,
-        "tablet": false,
-        "mobile": false
-      },
-      "breakpointBehavior": {
-        "navigation": "Desktop: horizontal nav links (15px). Tablet/Mobile: hamburger menu. Transition works cleanly.",
-        "heroSection": "Scales well across breakpoints. Text remains centered and readable.",
-        "cards": "Stack vertically on all viewports (already single-column on desktop, so no change needed for smaller screens)",
-        "statsSection": "Desktop: 3 columns. Tablet: appears to wrap. Mobile: stacks vertically. Clean transitions.",
-        "footer": "Desktop: 4 columns. Tablet: wraps to 2x2 or stacks. Mobile: single column.",
-        "ctaSection": "Consistent across breakpoints. Button remains centered."
-      },
-      "strengths": [
-        "No horizontal overflow on any viewport",
-        "Hamburger menu properly appears at tablet breakpoint",
-        "Footer adapts well to all viewports",
-        "CTAs remain accessible and tappable on mobile"
-      ],
-      "weaknesses": [
-        "Cards are already single-column on desktop - not leveraging wider viewports",
-        "My Practice mobile hero text could be slightly larger for readability"
-      ]
-    },
-    "scrollAnimations": {
-      "status": "concern",
-      "description": "Scroll-triggered reveal animations (opacity: 0 -> 1 with translateY) are applied to major content sections via the 'reveal' CSS class",
-      "strengths": [
-        "Smooth, professional animation feel when scrolling",
-        "Uses IntersectionObserver (performance-friendly)"
-      ],
-      "weaknesses": [
-        "Content is completely invisible (opacity: 0) until scrolled into view",
-        "Full-page screenshots capture sections at opacity: 0 - appears as blank white page to automated tools",
-        "CSS !important overrides cannot reliably fix this because IntersectionObserver re-applies styles",
-        "Search engine crawlers may not execute JS animations, potentially affecting perceived content",
-        "Reduced-motion preference should disable these animations (not verified)",
-        "If JS fails to load, content remains invisible"
-      ]
+    "service": {
+      "desktop": {
+        "domContentLoaded_ms": 1302,
+        "domComplete_ms": 2459,
+        "transferSize_bytes": 38217,
+        "fcp_status": "pass (under 2.5s)",
+        "cls_status": "pass (0)"
+      }
     }
   },
-  "bricksMCPWorkflowGaps": [
-    {
-      "id": "GAP-01",
-      "category": "builder_capability",
-      "priority": "critical",
-      "symptom": "No Bricks MCP tools available in the current Claude Code session",
-      "rootCause": "Bricks MCP server not connected/configured as an MCP server for this session",
-      "proposedImprovement": "Ensure Bricks MCP plugin is registered as an MCP server in Claude Code's MCP config. Provide clear setup docs for connecting the WordPress REST API endpoint.",
-      "expectedImpact": "Without this, zero page creation or modification is possible. This blocks the entire automated page-building workflow.",
-      "idealFutureBehavior": "Bricks MCP tools appear alongside Playwright tools automatically when the WordPress site URL is configured."
-    },
-    {
-      "id": "GAP-02",
-      "category": "scroll_animation_observability",
-      "priority": "high",
-      "symptom": "Full-page screenshots show blank white areas where content exists but has opacity: 0 due to scroll-reveal animations",
-      "rootCause": "Reveal animations use IntersectionObserver to toggle opacity. Playwright's full-page screenshot scrolls and stitches without triggering the observer, or the observer resets when viewport moves.",
-      "proposedImprovement": "Bricks MCP should provide a 'disable-animations' mode for audit/screenshot purposes, or a render tool that forces all elements visible before capture.",
-      "expectedImpact": "Would make automated visual QA possible without manual scroll-and-capture workarounds.",
-      "idealFutureBehavior": "bricks/render-page --disable-animations captures the full page with all elements visible."
-    },
-    {
-      "id": "GAP-03",
-      "category": "image_handling",
-      "priority": "high",
-      "symptom": "Hero background image reused across pages; logo PNG massively oversized (848px for 141px display); no WebP/AVIF; no srcset",
-      "rootCause": "No built-in image optimization or responsive image generation in the page creation workflow",
-      "proposedImprovement": "Auto-generate responsive srcset, serve WebP/AVIF, warn when image natural size > 2x display size, encourage unique images per page.",
-      "expectedImpact": "Better LCP scores, reduced bandwidth, more professional per-page visual identity.",
-      "idealFutureBehavior": "When assigning an image, auto-optimize and add srcset. Warn if same hero image used across multiple pages."
-    },
-    {
-      "id": "GAP-04",
-      "category": "responsive_design",
-      "priority": "high",
-      "symptom": "Home page cards render as single-column on desktop despite 1200px content width available for a 3-column grid",
-      "rootCause": "Cards use a vertically stacked layout that doesn't adapt to wider viewports",
-      "proposedImprovement": "Page blueprints should default to responsive grid layouts (3-col desktop, 2-col tablet, 1-col mobile) for card-type content.",
-      "expectedImpact": "Better use of horizontal space on desktop, more professional appearance.",
-      "idealFutureBehavior": "bricks/generate-blueprint automatically creates responsive grid layouts for card patterns."
-    },
-    {
-      "id": "GAP-05",
-      "category": "design_system",
-      "priority": "medium",
-      "symptom": "Quote section renders '201C' unicode escape instead of styled quotation mark",
-      "rootCause": "Raw unicode character inserted as text content instead of being rendered as a styled element",
-      "proposedImprovement": "Template/blueprint for quote sections should use CSS ::before pseudo-element for decorative quotes, not raw text content.",
-      "expectedImpact": "Eliminates visual glitch in quote sections.",
-      "idealFutureBehavior": "Quote section templates include CSS-based decorative quotation marks."
-    },
-    {
-      "id": "GAP-06",
-      "category": "performance_guardrails",
-      "priority": "medium",
-      "symptom": "15+ third-party scripts loaded (GSAP, ScrollSmoother, Swup, New Relic, GA, etc.) for a brochure site",
-      "rootCause": "BricksForge loads full GSAP suite + Swup page transitions regardless of whether they're needed per-page",
-      "proposedImprovement": "Script audit tool that identifies unused JS libraries per page. Conditional loading based on which elements actually use animations/transitions.",
-      "expectedImpact": "Faster TTI, smaller JS payload, better mobile performance.",
-      "idealFutureBehavior": "bricks/audit-performance warns about unused script libraries and suggests removal."
-    },
-    {
-      "id": "GAP-07",
-      "category": "accessibility",
-      "priority": "medium",
-      "symptom": "Skip link contrast fails WCAG AA (2.67:1)",
-      "rootCause": "Skip link styling uses light pink on medium red background",
-      "proposedImprovement": "Default skip link styling should pass WCAG AA. Accessibility checks should be part of the generation pipeline.",
-      "expectedImpact": "Full WCAG AA compliance.",
-      "idealFutureBehavior": "bricks/validate-accessibility checks skip links, focus states, and contrast before marking a page complete."
-    },
-    {
-      "id": "GAP-08",
-      "category": "semantic_html",
-      "priority": "medium",
-      "symptom": "Cards on home page use generic div containers rather than semantic elements like article or section with aria labels",
-      "rootCause": "Bricks Builder generates div-based layouts by default",
-      "proposedImprovement": "Templates should use semantic HTML (article for cards, section for page sections, nav for navigation lists). Admin labels should map to aria-label.",
-      "expectedImpact": "Better screen reader experience, improved SEO semantics.",
-      "idealFutureBehavior": "Card patterns automatically use <article> elements with admin labels as aria-labels."
-    },
-    {
-      "id": "GAP-09",
-      "category": "documentation",
-      "priority": "medium",
-      "symptom": "No example prompts or templates demonstrating 'ideal single-prompt page generation'",
-      "rootCause": "Workflow documentation focuses on individual tools rather than end-to-end generation patterns",
-      "proposedImprovement": "Provide example prompts that produce high-quality pages in one shot, with annotated before/after examples.",
-      "expectedImpact": "Dramatically reduces prompt iteration needed to build quality pages.",
-      "idealFutureBehavior": "Documentation includes 5-10 tested prompt templates for common page types (landing, service, about, contact, blog)."
-    },
-    {
-      "id": "GAP-10",
-      "category": "post_generation_validation",
-      "priority": "high",
-      "symptom": "No automated post-generation audit loop exists",
-      "rootCause": "Page generation and visual validation are separate manual processes",
-      "proposedImprovement": "After generating a page, automatically run Playwright audit (heading structure, contrast, overflow, CLS) and report issues before marking complete.",
-      "expectedImpact": "Would catch 80% of visual issues before user review.",
-      "idealFutureBehavior": "bricks/generate-page runs bricks/audit-page automatically after creation and returns both the page and an audit summary."
-    }
+  "responsive": {
+    "overflow": {"landing": false, "service": false},
+    "mobile_padding_issues": ["All sections use 120px padding — no mobile overrides, excessive whitespace"],
+    "small_text": [],
+    "tablet_nav": "Contact link hidden at 1024px",
+    "mobile_nav": "Hamburger menu present and functional",
+    "mobile_stats": "4th stat column clips at 478px on landing page"
+  },
+  "images": {
+    "total": 1,
+    "content_images": 0,
+    "missing_alt": 0
+  },
+  "what_works_well": [
+    "Header/footer template inheritance works correctly on generated pages",
+    "Responsive framework basics: hamburger menu, section stacking, text reflow",
+    "No horizontal overflow at any viewport",
+    "Fast performance: DCL under 1.5s, DOM complete under 2.5s, ~38KB transfer",
+    "No console errors",
+    "ACSS color variables used for section backgrounds",
+    "Skip links present for accessibility",
+    "Heading hierarchy is technically correct (H1>H2>H3)",
+    "Hero section has dark gradient background visual treatment",
+    "All sections have admin labels for builder UX",
+    "Polish score improved to 100 after design loop",
+    "Hero score 78 is solid (passes 70 threshold)"
+  ],
+  "recommendations": [
+    {"id": "R-01", "priority": "critical", "category": "content_generation", "title": "Build tool must use brief as a generation prompt, not literal content", "impact": "Fixes the single largest quality gap — everything else is moot if the brief is rendered as content"},
+    {"id": "R-02", "priority": "critical", "category": "content_generation", "title": "Generate unique section structures per brief instead of reusing a single template", "impact": "Would produce structurally distinct pages matching requested section types"},
+    {"id": "R-03", "priority": "critical", "category": "content_generation", "title": "Generate real headlines, body copy, and CTA text from brief intent and site context", "impact": "Would produce conversion-ready content instead of scaffolding labels"},
+    {"id": "R-04", "priority": "high", "category": "media_pipeline", "title": "Auto-invoke search-stock-images and import-stock-image during builds", "impact": "Eliminates zero-image pages"},
+    {"id": "R-05", "priority": "high", "category": "brand_compliance", "title": "Require setup-design-system or update-site-style-memory before build with reuse_design_system:true", "impact": "Ensures brand colors, CTA text, and fonts available for builds"},
+    {"id": "R-06", "priority": "high", "category": "design_system", "title": "Vary section padding for visual rhythm — not all 120px", "impact": "Improves page narrative pacing"},
+    {"id": "R-07", "priority": "high", "category": "responsive_quality", "title": "Set explicit tablet/mobile padding overrides (80px tablet, 48-64px mobile)", "impact": "Prevents excessive whitespace on small screens"},
+    {"id": "R-08", "priority": "medium", "category": "accessibility", "title": "Add brief-as-content detection check at build time", "impact": "Catches most visible content generation failure"},
+    {"id": "R-09", "priority": "medium", "category": "design_system", "title": "Use ACSS section spacing classes instead of hardcoded padding", "impact": "Leverages ACSS responsive scaling automatically"},
+    {"id": "R-10", "priority": "medium", "category": "observability", "title": "Return brief_fidelity_score in build results measuring content-to-brief alignment", "impact": "Signals caller to re-run or adjust before publishing"},
+    {"id": "R-11", "priority": "medium", "category": "workflow_integration", "title": "Reconcile design score discrepancy (build reports 25/29, validate returns 0/1)", "impact": "Accurate quality signals for automated workflows"},
+    {"id": "R-12", "priority": "low", "category": "safety", "title": "Warn when site_style_memory is not configured and reuse_design_system is true", "impact": "Prevents silent fallback to generic styling"}
   ]
 }

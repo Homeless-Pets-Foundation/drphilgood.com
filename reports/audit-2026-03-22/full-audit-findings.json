@@ -1,0 +1,148 @@
+{
+  "audit": {
+    "date": "2026-03-22",
+    "round": 3,
+    "type": "post-fix verification + best practices comparison",
+    "site": "https://drphilgood.com",
+    "overall_score": 88,
+    "previous_score": 62,
+    "improvement": 26,
+    "score_threshold": "Good (75-89)",
+    "pages_audited": 6,
+    "breakpoints_tested": ["1440x900", "768x1024", "375x812"],
+    "benchmarks_passed": "30/33"
+  },
+  "category_scores": {
+    "A_layout_structure": { "score": 18, "max": 20, "previous": 15 },
+    "B_hero_first_impression": { "score": 14, "max": 15, "previous": 12 },
+    "C_typography_readability": { "score": 13, "max": 15, "previous": 8 },
+    "D_color_visual_design": { "score": 9, "max": 10, "previous": 8 },
+    "E_responsive_mobile": { "score": 13, "max": 15, "previous": 11 },
+    "F_ctas_conversion": { "score": 9, "max": 10, "previous": 8 },
+    "G_accessibility": { "score": 9, "max": 10, "previous": 8 },
+    "H_performance": { "score": 5, "max": 5, "previous": 5 }
+  },
+  "resolved_from_previous_audit": [
+    "F-001: 51 invisible elements (scroll-reveal fix)",
+    "F-002: Heading font fallback (ACSS variable override)",
+    "F-003: H1 undersized 42.6px → 64px",
+    "F-004: H2 32px → 40px, H3 24px → 20px",
+    "F-005: SVG placeholder images resolved",
+    "F-006: Practice page image added",
+    "F-007: Tablet H1 34.6px → 48px",
+    "F-008: Touch targets improved",
+    "F-009: About 201C character fixed",
+    "F-010: Font families 5 → 2",
+    "F-011: About hero line length constrained",
+    "F-012: Contact hero CTA added",
+    "F-013: Ghost button borders improved",
+    "F-014: Home nav active state CSS added",
+    "F-015: Rescue overline corrected",
+    "F-016: Focus indicator color changed to blue",
+    "F-017: Home H1 includes Dr. Phil Good name",
+    "F-018: Contact H3 labels darkened",
+    "F-019: Text link underline affordance added"
+  ],
+  "remaining_findings": [
+    {
+      "id": "R-001",
+      "severity": "high",
+      "category": "C_typography_readability",
+      "pages": ["practice", "rescue", "legacy"],
+      "title": "Body text line length exceeds 75 characters on 3 pages",
+      "description": "Practice, Rescue, and Legacy pages have body text at ~93 estimated characters per line (836px width at 18px). Best practice for readability is 50-75 characters.",
+      "recommendation": "Add max-width: 680px to body text containers on these pages, similar to the About page fix.",
+      "effort": "low"
+    },
+    {
+      "id": "R-002",
+      "severity": "high",
+      "category": "F_ctas_conversion",
+      "pages": ["about", "rescue", "legacy"],
+      "title": "No hero CTA button on 3 pages",
+      "description": "About, Rescue, and Legacy pages only have a CTA at the bottom of the page, not in the hero section. Best practice for biography sites is to have a soft CTA in every hero viewport.",
+      "recommendation": "Add a secondary CTA button (e.g., 'Schedule a Visit' or 'Learn More') to the hero sections of these pages.",
+      "effort": "medium"
+    },
+    {
+      "id": "R-003",
+      "severity": "high",
+      "category": "B_hero_first_impression",
+      "pages": ["practice", "rescue", "legacy", "contact"],
+      "title": "Low image density on 4 pages",
+      "description": "Practice has 1 image, Rescue has 1, Legacy has 1, Contact has 0. Best-in-class biography sites use 3-5 images per page. Text-heavy pages feel less engaging.",
+      "recommendation": "Add 2-3 relevant photos per page: hospital interior/staff for Practice, rescue animals for Rescue, family photos for Legacy, hospital exterior for Contact.",
+      "effort": "medium"
+    },
+    {
+      "id": "R-004",
+      "severity": "medium",
+      "category": "E_responsive_mobile",
+      "pages": ["home", "about", "contact"],
+      "title": "16-22 undersized touch targets on tablet",
+      "description": "Tablet breakpoint has 16-22 interactive elements under 44px height. Most are footer links and inline text links. Mobile has improved to 4-10 per page.",
+      "recommendation": "Increase padding on footer links and inline text links at the tablet breakpoint (@media max-width: 1024px).",
+      "effort": "low"
+    },
+    {
+      "id": "R-005",
+      "severity": "medium",
+      "category": "F_ctas_conversion",
+      "pages": ["contact"],
+      "title": "No embedded contact form",
+      "description": "The Contact page has phone, email, and booking links but no embedded contact form. Many visitors prefer submitting a form rather than making a call.",
+      "recommendation": "Add a simple contact form (name, email, message) to the Contact page.",
+      "effort": "medium"
+    },
+    {
+      "id": "R-006",
+      "severity": "low",
+      "category": "A_layout_structure",
+      "pages": ["news"],
+      "title": "News page outdated and unstyled",
+      "description": "The News page (post 770) has not been redesigned to match the new site style. Blog/content marketing is a best practice for biography sites.",
+      "recommendation": "Redesign News page with archive + single post templates matching site design system.",
+      "effort": "high"
+    },
+    {
+      "id": "R-007",
+      "severity": "low",
+      "category": "B_hero_first_impression",
+      "pages": ["home"],
+      "title": "No video content on site",
+      "description": "Top biography websites often include a short intro or welcome video. DrPhilGood.com has no video content anywhere.",
+      "recommendation": "Consider adding a 60-90 second intro video to the Home or About page.",
+      "effort": "medium"
+    }
+  ],
+  "performance_metrics": {
+    "home": { "domContentLoaded": 1113, "loadComplete": 1601 },
+    "about": { "domContentLoaded": 782, "loadComplete": 1238 },
+    "practice": { "domContentLoaded": 743, "loadComplete": 1242 },
+    "rescue": { "domContentLoaded": 757, "loadComplete": 1262 },
+    "legacy": { "domContentLoaded": 697, "loadComplete": 1165 },
+    "contact": { "domContentLoaded": 724, "loadComplete": 1132 }
+  },
+  "typography_verification": {
+    "h1": { "size": "64px", "font": "Plus Jakarta Sans", "all_pages_consistent": true },
+    "h2": { "size": "40px", "font": "Plus Jakarta Sans", "all_pages_consistent": true },
+    "h3": { "size": "20px", "font": "Plus Jakarta Sans", "all_pages_consistent": true },
+    "h4": { "size": "18px", "font": "Plus Jakarta Sans", "all_pages_consistent": true },
+    "body": { "size": "18px", "lineHeight": "30.6px", "font": "Inter", "all_pages_consistent": true },
+    "tablet_h1": "48px",
+    "mobile_h1": "32px"
+  },
+  "responsive_verification": {
+    "desktop": { "overflow": false, "hidden_elements": 0 },
+    "tablet": { "overflow": false, "hamburger": true, "nav_hidden": true },
+    "mobile": { "overflow": false, "hero_stacks": true, "hamburger": true }
+  },
+  "image_inventory": {
+    "home": { "count": 4, "svg_placeholders": 0 },
+    "about": { "count": 2, "svg_placeholders": 0 },
+    "practice": { "count": 1, "svg_placeholders": 0 },
+    "rescue": { "count": 1, "svg_placeholders": 0 },
+    "legacy": { "count": 1, "svg_placeholders": 0 },
+    "contact": { "count": 0, "svg_placeholders": 0 }
+  }
+}

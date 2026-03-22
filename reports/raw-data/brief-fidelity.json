@@ -1,0 +1,77 @@
+{
+  "audit_date": "2026-03-20",
+  "pages": {
+    "landing": {
+      "post_id": 1777,
+      "title": "UX Audit Demo – Landing Page",
+      "element_count": 64,
+      "section_count": 7
+    },
+    "service": {
+      "post_id": 1779,
+      "title": "UX Audit Demo – Service Detail",
+      "element_count": 55,
+      "section_count": 7
+    }
+  },
+  "content_uniqueness": {
+    "pass": false,
+    "severity": "CRITICAL",
+    "detail": "Both pages share identical section structure: hero-section, social-proof-bar-section, problem-section, solution-features-section, testimonials-section, details-section, final-cta-section. Same section names, same order, same count (7 each). Section labels are 100% identical between pages.",
+    "shared_section_names": ["hero-section", "social-proof-bar-section", "problem-section", "solution-features-section", "testimonials-section", "details-section", "final-cta-section"],
+    "landing_sections": 7,
+    "service_sections": 7,
+    "structural_overlap_pct": 100
+  },
+  "brief_as_content": {
+    "pass": false,
+    "severity": "CRITICAL",
+    "detail": "Brief instructions rendered verbatim as page content instead of being used as a generation prompt.",
+    "evidence": {
+      "landing_h1": "Build a modern, conversion-focused landing page for this business",
+      "landing_subheadline": "Include these sections in order: (1) A hero section with a compelling headline about the product's core value, a supporting subheadline, a primary CTA button, a secondary CTA button, and a background visual or gradient.",
+      "landing_h3_fragments": ["A problem/pain", "A how", "A testimonial section with 2"],
+      "service_h1": "Build a content-rich service detail page",
+      "service_subheadline": "Include these sections in order: (1) A hero section with a clear service headline and supporting subheadline.",
+      "service_h3_fragments": ["An FAQ section with 5"],
+      "landing_text_elements_with_brief": ["Include these sections in order: (1) A hero section...", "stats or partner logos", "steps", "customer quotes"],
+      "service_text_elements_with_brief": ["Include these sections in order: (1) A hero section...", "key benefits as icons or cards", "workflow steps with descriptions", "questions specific to this service"]
+    }
+  },
+  "section_count_check": {
+    "landing": {
+      "requested": 8,
+      "generated": 7,
+      "missing_sections": ["FAQ accordion (not generated)", "How-it-works (merged into generic 'Solution Features')"],
+      "extra_sections": ["social-proof-bar (not in original brief order)", "problem (not explicitly requested as separate section)"]
+    },
+    "service": {
+      "requested": 6,
+      "generated": 7,
+      "missing_sections": ["Value proposition cards", "Step-by-step process", "Alternating image/text blocks", "FAQ section"],
+      "extra_sections": ["social-proof-bar (not requested)", "problem (not requested)", "testimonials (not requested)", "details (not requested)"]
+    }
+  },
+  "brand_color_check": {
+    "pass": "uncertain",
+    "severity": "HIGH",
+    "detail": "Site style memory is not configured, so no brand colors were stored. The build used a consistent dark navy palette (#1E3A5F) which matches the existing site header, but this is coincidental inheritance from the site template rather than deliberate brand compliance. Hero bg: rgb(30, 58, 95). Section alternation: #f1f5f9 / #f8fafc. Text color: rgb(51, 65, 85)."
+  },
+  "cta_text_check": {
+    "pass": "uncertain",
+    "severity": "MEDIUM",
+    "detail": "Site style memory not configured — no stored CTA text to compare. Both pages used 'Get Started' (primary) and 'Contact Us' (secondary). These are generic, not derived from any stored brand values.",
+    "landing_ctas": ["Get Started", "Contact Us"],
+    "service_ctas": ["Get Started", "Contact Us"]
+  },
+  "image_count": {
+    "pass": false,
+    "severity": "HIGH",
+    "detail": "Zero content images on either page. Only image is the header logo (from template). The build tool did not call search-stock-images or import-stock-image.",
+    "landing_content_images": 0,
+    "service_content_images": 0,
+    "total_images_per_page": 1,
+    "image_source": "header logo only (template)"
+  },
+  "overall_fidelity_verdict": "CRITICAL FAILURE — The build tool rendered brief instructions as literal page content. Both pages are structurally identical despite requesting different layouts. No real content was generated."
+}

@@ -1,286 +1,316 @@
-# Bricks MCP UI/UX Audit Report
+# Bricks MCP UI/UX Audit Report — v2
 
 **Date:** 2026-03-20
 **Site:** https://drphilgood.com
-**Auditor:** Claude Code (Opus 4.6) via Playwright MCP
-**Pages Audited:** Home (/), My Practice (/my-practice/)
-**Viewports:** Desktop (1440x900), Tablet (768x1024), Mobile (390x844)
+**Auditor:** Claude Code (Opus 4.6) via Playwright MCP + Bricks MCP REST API
+**Pages Created:** UX Audit Demo – Landing Page (ID 1777), UX Audit Demo – Service Detail (ID 1779)
+**Viewports:** Desktop (1440x900), Tablet (1024x768), Mobile (478x844)
+**Bricks MCP Version:** 1.8.9 (89 tools)
+**CSS Framework:** Automatic.css 3.3.6
 
 ---
 
 ## 1. Executive Summary
 
-This audit evaluated the DrPhilGood.com website across two representative pages (Home and My Practice) at three viewport sizes using Playwright browser automation. The site is well-built with Bricks Builder + ACSS, demonstrating clean heading hierarchy, good body text contrast, fast loading, and responsive behavior with zero horizontal overflow.
-
-**Critical finding:** The Bricks MCP server was NOT connected to this Claude Code session. No Bricks/WordPress tools were available, meaning page creation was impossible. This is the single largest workflow gap — without MCP connectivity, automated page building cannot occur.
-
-**Key strengths:** Fast performance (FCP ~1.7s), excellent heading structure, WCAG-compliant body text contrast, responsive layouts that adapt cleanly, professional design language.
-
-**Key weaknesses:** Scroll-reveal animations make automated visual QA nearly impossible, hero background image is dated and reused across pages, home page cards underutilize desktop width with single-column layout, 15+ third-party scripts loaded for a brochure site.
+The Bricks MCP `build-page-from-brief` tool produced structurally sound page scaffolding but **critically failed at content generation**. Both pages rendered the brief instructions as literal page content instead of using the brief as a generation prompt. The two pages — requested with different section types and layouts — produced identical 7-section structures with generic placeholder headings ("Social Proof Bar", "Problem", "Final Cta") and no real copy. Zero content images were generated. The underlying layout framework (responsive stacking, header/footer inheritance, ACSS integration) works well, but the content generation pipeline needs fundamental rework.
 
 ---
 
-## 2. Environment & MCP Tool Inventory
+## 2. Environment and MCP Tool Inventory
 
-### Available MCP Servers
-| Server | Status | Tools Available |
-|--------|--------|----------------|
-| **Bricks MCP (WordPress)** | **NOT CONNECTED** | 0 tools |
-| Playwright | Connected | 20+ browser automation tools |
-| Notion | Connected | 12+ tools (not relevant) |
-| Gmail | Connected | (not relevant) |
-| Google Calendar | Connected | (not relevant) |
-| Trigger.dev | Connected | (not relevant) |
-| VS Code IDE | Connected | 2 tools |
+| Component | Version/Detail |
+|-----------|---------------|
+| WordPress | 6.9.4 |
+| PHP | 8.4.18 |
+| Bricks Builder | 2.3 |
+| Bricks MCP Plugin | 1.8.9 |
+| Automatic.css | 3.3.6 |
+| Total MCP Tools | 89 |
+| MCP Connection | REST API via curl (not registered as MCP server in `.mcp.json`) |
+| Playwright | Available via MCP server |
 
-### Impact of Missing Bricks MCP
-- Could not create the two planned demo pages ("UX Audit Demo - Landing Page" and "UX Audit Demo - Service Detail Page")
-- Could not modify any existing page content
-- Could not test the Bricks MCP authoring workflow end-to-end
-- Switched to auditing existing pages as the best available alternative
+**Tool categories (89 total):**
+- Page CRUD: create-page, update-page, delete-page, duplicate-page, list-pages
+- Build automation: build-page-from-brief, build-site-from-brief, run-design-loop, polish-page
+- Element management: get-page-elements, set-page-elements, update-page-elements, bulk-update
+- Design system: setup-design-system, validate-design, validate-site-design, detect-css-framework
+- Quality assurance: score-hero, analyze-page-rhythm, audit-contrast-site, audit-spacing-site
+- Media: search-stock-images, import-stock-image, upload-media, list-media, direct-image-treatment
+- Templates: create-template, list-templates, get/set/update-template-elements
+- Style memory: get-site-style-memory, update-site-style-memory, get-style-dna, capture-site-style-baseline
+- Responsive: get-preview-targets, validate-responsive-cascade, get-render-checklist
+- WordPress: execute-php, manage-options, wp-query, manage-seo-meta
 
----
-
-## 3. Pages Audited
-
-Since the Bricks MCP server was unavailable, I audited the two existing pages that best match the requested patterns:
-
-| Page | URL | Post ID | Pattern Match |
-|------|-----|---------|---------------|
-| Home | / | 1581 | Landing page (hero, cards, stats, quote, CTA) |
-| My Practice | /my-practice/ | 1747 | Service detail (hero, about, service cards, training, CTA) |
+**Site Style Memory:** NOT CONFIGURED — `get-site-style-memory` returns `{"status": "not_configured"}`. This means `reuse_design_system: true` has no brand colors, CTA text, or fonts to consume.
 
 ---
 
-## 4. Page-by-Page Findings
+## 3. Pages Created and Build Scores
 
-### Home Page (/)
+### Page 1: UX Audit Demo – Landing Page (ID 1777)
 
-#### Heading Structure (GOOD)
+| Metric | Initial | After Design Loop | Threshold | Status |
+|--------|---------|-------------------|-----------|--------|
+| Design Score (build-time) | 25 | 25 | >= 60 | **FAIL** |
+| Design Score (validate-design) | 0 | — | >= 60 | **FAIL** |
+| Hero Score | 63 → 78 | 78 | >= 70 | **PASS** |
+| Polish Score | 76 | 100 | >= 40 | **PASS** |
+| Element Count | 64 | 64 | — | — |
+
+### Page 2: UX Audit Demo – Service Detail (ID 1779)
+
+| Metric | Initial | After Design Loop | Threshold | Status |
+|--------|---------|-------------------|-----------|--------|
+| Design Score (build-time) | 29 | 29 | >= 60 | **FAIL** |
+| Design Score (validate-design) | 1 | — | >= 60 | **FAIL** |
+| Hero Score | 63 → 78 | 78 | >= 70 | **PASS** |
+| Polish Score | 84 | 100 | >= 40 | **PASS** |
+| Element Count | 55 | 55 | — | — |
+
+**Note:** There is a significant discrepancy between the build-time design score (25/29) and the `validate-design` score (0/1). These appear to use different scoring criteria.
+
+---
+
+## 4. Brief Fidelity Validation Results
+
+### CRITICAL FAILURE: Brief Rendered as Page Content
+
+The build tool treated the brief text as literal page content instead of a generation prompt.
+
+**Evidence — Landing Page:**
+- H1: "Build a modern, conversion-focused landing page for this business" (= first line of brief)
+- Subheadline: "Include these sections in order: (1) A hero section with a compelling headline..." (= brief instructions)
+- H3 elements: "A problem/pain", "A how", "A testimonial section with 2" (= fragments of brief)
+
+**Evidence — Service Page:**
+- H1: "Build a content-rich service detail page" (= first line of brief)
+- Subheadline: "Include these sections in order: (1) A hero section with a clear service headline..." (= brief instructions)
+- H3 element: "An FAQ section with 5" (= brief fragment)
+
+### CRITICAL FAILURE: Both Pages Are Structurally Identical
+
+Despite requesting 8 different sections for the landing page and 6 different sections for the service page, both produced the same 7-section scaffolding:
+
+| # | Landing Sections | Service Sections | Same? |
+|---|-----------------|-----------------|-------|
+| 1 | hero-section | hero-section | Yes |
+| 2 | social-proof-bar-section | social-proof-bar-section | Yes |
+| 3 | problem-section | problem-section | Yes |
+| 4 | solution-features-section | solution-features-section | Yes |
+| 5 | testimonials-section | testimonials-section | Yes |
+| 6 | details-section | details-section | Yes |
+| 7 | final-cta-section | final-cta-section | Yes |
+
+**Structural overlap: 100%**
+
+### Section Count Check
+
+| Page | Requested | Generated | Matched Brief |
+|------|-----------|-----------|---------------|
+| Landing | 8 (hero, trust bar, problem, how-it-works, features, testimonials, FAQ, final CTA) | 7 | 0 |
+| Service | 6 (hero, value prop, process, image/text blocks, FAQ, CTA) | 7 | 0 |
+
+### Other Fidelity Checks
+
+| Check | Result | Severity |
+|-------|--------|----------|
+| Content uniqueness | FAIL — 100% identical section names | CRITICAL |
+| Brief-as-content | FAIL — brief rendered verbatim | CRITICAL |
+| Brand colors | Uncertain — style memory not configured | HIGH |
+| CTA text | Generic ("Get Started", "Contact Us") — no stored values | MEDIUM |
+| Content images | FAIL — 0 content images on either page | HIGH |
+
+---
+
+## 5. Page-by-Page Findings
+
+### Landing Page — What Was Requested vs What Was Generated
+
+| Brief Section | Generated? | What Appeared Instead |
+|--------------|-----------|----------------------|
+| Hero with compelling headline | Partial — hero section exists but H1 is the brief instruction text | "Build a modern, conversion-focused landing page for this business" |
+| Primary + secondary CTA | Partial — only 1 CTA ("Get Started"), brief requested 2 | Missing secondary CTA |
+| Social proof/trust bar | Partial — section exists with stats, but stats are brief fragment numbers (4, 3, 3, 6) | Numbers from brief parsed as stat values |
+| Problem/pain-point section | Scaffolding only | "Problem" heading + "Use this section to support the problem narrative" |
+| How-it-works (3 steps) | Not generated | Merged into generic "Solution Features" |
+| Features (3-4 cards) | Scaffolding only | Cards contain brief fragments as content |
+| Testimonials (2-3 quotes) | Partial — 3 quotes present but they ARE brief text fragments | "or trust bar with 3-4 stats or partner logos" rendered as a quote |
+| FAQ accordion (4-6 questions) | Not generated | Missing entirely |
+| Final CTA with dark background | Scaffolding only | Light gray background, not dark/gradient |
+
+### Service Page — What Was Requested vs What Was Generated
+
+| Brief Section | Generated? | What Appeared Instead |
+|--------------|-----------|----------------------|
+| Hero with service headline | Partial — hero exists, H1 is brief instruction | "Build a content-rich service detail page" |
+| Value proposition (3-4 cards) | Not generated | Generic "Social Proof Bar" instead |
+| Step-by-step process (4-5 steps) | Not generated | Generic "Problem" section |
+| Alternating image/text blocks | Not generated | Generic "Solution Features" |
+| FAQ (5-8 questions) | Not generated | H3 "An FAQ section with 5" (brief fragment) |
+| Contact/conversion CTA | Scaffolding only | "Contact Us" button in generic section |
+
+---
+
+## 6. Viewport-by-Viewport Findings
+
+### Desktop (1440px)
+
+- Hero: dark navy gradient (#1E3A5F) background, brief text as H1 is visible but very low contrast (dark text on dark bg)
+- Sections: all have identical 120px top/bottom padding — monotonous vertical rhythm
+- Section backgrounds alternate between #f1f5f9 and #f8fafc (very subtle difference)
+- Massive empty whitespace in sections that only have 1-2 lines of placeholder text
+- No horizontal overflow
+- Performance: DCL 1.4s, DOM complete 2.1-2.5s, ~38KB transfer
+
+### Tablet (1024px)
+
+- "Contact" nav link hidden (only 4 of 5 nav items visible)
+- Hero text wraps appropriately
+- Sections remain empty/placeholder with excessive padding
+- Stats grid collapses from 4→3 columns (landing) and 3→stacked (service)
+
+### Mobile (478px)
+
+- Hamburger menu present and functional
+- Hero heading readable and properly sized
+- 4th stat column (landing) clips off-screen
+- Sections still have 120px padding — excessive for mobile viewport
+- Footer stacks to single column correctly
+
+---
+
+## 7. What Is Working Well
+
+1. **Template inheritance** — Header and footer from site templates (post IDs 1760, 1763) correctly applied to both generated pages
+2. **Responsive framework** — Hamburger menu, section stacking, text reflow all work correctly
+3. **No overflow or layout breaks** — Zero horizontal overflow at any viewport
+4. **Performance** — DCL under 1.5s, small transfer size (~38KB), no console errors
+5. **ACSS integration** — Section backgrounds use ACSS-compatible color values, heading sizes follow the ACSS typography scale
+6. **Hero visual treatment** — Dark gradient backgrounds with proper section structure
+7. **Admin labels** — All sections properly labeled for builder UX
+8. **Heading hierarchy** — Technically correct (H1 > H2 > H3), even though content is wrong
+9. **Skip links** — Accessibility skip links present
+10. **Polish scoring** — Design loop successfully improved polish scores to 100 on both pages
+11. **Hero scoring** — Hero score 78 passes threshold, correctly identifies "no-proof-near-cta" anti-pattern
+
+---
+
+## 8. What Is Not Working Well
+
+1. **Content generation is fundamentally broken** — Brief treated as literal content, not a prompt
+2. **No structural differentiation** — Both pages use identical scaffolding regardless of brief
+3. **No real copy** — Only placeholder text ("Use this section to support the X narrative")
+4. **No images** — Zero content images sourced or imported
+5. **No brand compliance** — Style memory not configured, generic palette used
+6. **Monotonous section padding** — All sections 120px, no variation for rhythm
+7. **No mobile padding reduction** — 120px padding excessive on 478px viewport
+8. **Hero text contrast** — Dark heading text on dark background (estimated ~1.5:1 ratio)
+9. **Design score discrepancy** — Build reports 25/29, validate returns 0/1
+10. **Missing requested sections** — FAQ, how-it-works, alternating blocks all absent
+11. **Stats are brief fragments** — Numbers from the brief (4, 3, 3, 6) parsed as stat values
+12. **Testimonials contain brief text** — Brief instruction phrases rendered as customer quotes
+
+---
+
+## 9. Fixes Applied
+
+No fixes were applied to the generated pages. Per the audit protocol, content generation failures (wrong copy, missing sections) are plugin-level bugs, not page-level fixes. Fixing the content on these pages would obscure the audit's ability to measure the build tool's actual output quality.
+
+The pages were temporarily published for Playwright screenshots, then reverted to draft status.
+
+---
+
+## 10. Plugin Improvement Recommendations (Prioritized)
+
+| ID | Priority | Category | Observed Symptom | Likely Root Cause | Proposed Improvement | Expected Impact | Ideal Behavior |
+|----|----------|----------|-----------------|-------------------|---------------------|----------------|----------------|
+| R-01 | **CRITICAL** | Content Generation | Brief instructions appear as H1, body text, H3 headings | Build tool does not invoke an LLM to generate content from the brief — it parses the brief text and places fragments directly into elements | Build tool must pass the brief to an LLM (or internal content generation engine) that produces original headlines, body copy, and CTA text derived from the brief's intent and the site's existing content | Would fix the #1 quality gap — every other improvement is moot if the brief is the content | H1 should be "Compassionate Veterinary Care in Marietta", not "Build a modern, conversion-focused landing page" |
+| R-02 | **CRITICAL** | Content Generation | Both pages have identical 7-section structure despite different briefs | Build tool uses a single hardcoded section template regardless of brief content | Parse the brief to extract requested section types and generate a page-specific section layout that matches the brief's structure requirements | Would produce structurally distinct pages | Landing page gets 8 distinct sections as requested; service page gets 6 different sections |
+| R-03 | **CRITICAL** | Content Generation | Section headings are scaffolding labels ("Social Proof Bar", "Problem") | No content personalization or brand-context injection | Generate section-specific content: real headlines, descriptive body text, specific stats, relevant testimonials drawn from site context | Transforms scaffolding into publish-ready pages | "Problem" section becomes "Many Pet Owners Wait Too Long for Critical Care" |
+| R-04 | **HIGH** | Media Pipeline | Zero content images on either page | Build tool does not invoke search-stock-images or import-stock-image | Auto-source images during build: search for relevant stock images, import them, and assign to hero backgrounds, feature cards, and content sections | Eliminates bare/text-only pages | Hero has a relevant veterinary/pet image; feature cards have icons or photos |
+| R-05 | **HIGH** | Brand Compliance | Style memory not configured — no brand ground truth available | No prerequisite check for style memory before building with reuse_design_system:true | Require or auto-run setup-design-system / update-site-style-memory before build; fail or warn if not configured | Ensures brand colors, CTA text, and fonts are available | Build tool consumes stored brand values or refuses to proceed without them |
+| R-06 | **HIGH** | Design System | All sections use identical 120px padding — monotonous rhythm | Hardcoded default padding with no variation logic | Vary section padding based on section type: hero (120px), content (80-96px), CTA (64-80px), trust bar (48px); use ACSS section spacing classes | Better visual rhythm and page narrative pacing | Sections have 3-4 different padding levels creating visual interest |
+| R-07 | **HIGH** | Responsive Quality | 120px section padding on mobile is excessive | No tablet/mobile breakpoint overrides for section padding | Set explicit breakpoint overrides: 80px tablet, 48-64px mobile; or use ACSS section--m/section--l classes which auto-reduce | Prevents excessive whitespace on small screens | Mobile sections have 48px padding, tablet 80px |
+| R-08 | **MEDIUM** | Accessibility | H1 is brief instruction text, not meaningful page content | No validation that H1 represents real page content | Add a brief-as-content detection check: if H1 text matches >30% of the brief input, flag it and regenerate | Catches the most visible symptom of content generation failure | Build tool rejects H1 that mirrors the brief |
+| R-09 | **MEDIUM** | Design System | Hardcoded _padding values instead of ACSS classes | Build tool generates inline padding settings | Use ACSS section spacing classes (section--m, section--l, section--xl) on section elements | Leverages ACSS responsive scaling automatically | All sections use ACSS classes, no hardcoded padding |
+| R-10 | **MEDIUM** | Observability | No way to tell if the build followed the brief without manual inspection | No fidelity metric in build output | Return a `brief_fidelity_score` that measures heading-to-brief similarity, section count match, and content originality | Signals caller to re-run or adjust before publishing | Build output includes `brief_fidelity_score: 0.85` |
+| R-11 | **MEDIUM** | Workflow Integration | Build reports design_score 25/29 but validate-design returns 0/1 | Different scoring mechanisms or criteria between build-time and validate-design | Reconcile or clearly document the two scoring systems; ideally use a single consistent metric | Accurate quality signals for automated workflows | Same score from both tools |
+| R-12 | **LOW** | Safety | No warning when style memory is unconfigured and reuse_design_system is true | Silent fallback to generic styling | Warn in build output when style memory is empty, suggest running setup-design-system first | Prevents unexpected generic results | Build output includes warning: "style memory not configured — using defaults" |
+
+---
+
+## 11. Recommended Guardrails for Single-Prompt Generation
+
+1. **Pre-flight check**: Before build-page-from-brief, verify site-style-memory is configured. If not, either auto-initialize from existing pages or return an error.
+
+2. **Brief-as-content gate**: After element generation, check if H1 text has >30% overlap with the brief input. If so, regenerate the H1 using the brief as a prompt, not content.
+
+3. **Section structure validation**: Compare generated section types against what the brief requested. Flag missing sections and structural overlap with other recently-generated pages.
+
+4. **Content originality check**: Verify that body text elements don't contain brief instruction fragments. Flag placeholder text ("Use this section to support...").
+
+5. **Image check**: Verify at least 1 content image per page. If zero, auto-invoke search-stock-images + import-stock-image for the hero section at minimum.
+
+6. **Responsive padding**: Never use a single padding value for all sections. Require at least 3 distinct padding levels and enforce mobile overrides.
+
+7. **Score reconciliation**: Use a single design score across all tools. Report it consistently.
+
+8. **Post-build audit**: Auto-run validate-design + score-hero after every build. Include results in the build response.
+
+---
+
+## 12. Remaining Uncertainties
+
+1. **Hero text contrast**: The dark heading text on the dark hero background appears to have very low contrast (~1.5:1), but precise measurement is difficult because the text color inherits from a global setting and the background is a solid color, not an image. Needs manual verification.
+
+2. **ACSS responsive behavior**: Whether ACSS section spacing classes would auto-reduce padding at tablet/mobile breakpoints was not tested because the build tool used hardcoded `_padding` values instead of ACSS classes.
+
+3. **Content generation capability**: It is unclear whether `build-page-from-brief` is designed to generate original content or whether it intentionally produces scaffolding. The tool's internal instructions suggest it should "write realistic, conversion-oriented content," but the observed behavior contradicts this.
+
+4. **Design score meaning**: The discrepancy between build-time scores (25/29) and validate-design scores (0/1) suggests either different scoring criteria or a bug. The actual quality bar for each score is undocumented.
+
+5. **Tablet nav truncation**: The "Contact" nav link disappearing at 1024px may be intentional (space constraint) or a bug. Needs design review.
+
+6. **Service page testimonials**: The service page generated 3 testimonial quotes with attributed names — these are the only elements that appear to contain generated (non-brief) content. It's unclear if this represents partial content generation success or hardcoded template content.
+
+---
+
+## Completion Checklist
+
+- [x] Phase 1: Inspected MCP tool inventory (89 tools) and documented connectivity (REST API)
+- [x] Phase 1: Detected CSS framework (ACSS 3.3.6) and read site style memory (not configured)
+- [x] Phase 2: Created two pages via build-page-from-brief (IDs 1777, 1779)
+- [x] Phase 2: Ran validate-design and score-hero on both pages
+- [x] Phase 3: Validated brief fidelity — CRITICAL failures on content uniqueness, brief-as-content, brand colors, CTA text
+- [x] Phase 4: Audited both pages on desktop (1440px), tablet (1024px), and mobile (478px) with screenshots
+- [x] Phase 4: Checked heading structure, contrast, images, performance, overflow
+- [x] Phase 4: Reverted both pages to draft status
+- [x] Phase 5: Evaluated all criteria with pass/fail/uncertain status
+- [x] Phase 6: Documented why fixes were not applied (plugin-level content generation bugs)
+- [x] Phase 7: Produced 12 prioritized plugin recommendations tied to evidence
+- [x] Saved all reports and artifacts to reports/
+
+---
+
+## Artifacts
+
 ```
-H1: Dr. Phil Good, DVM
-  H2: What I Do
-    H3: My Practice
-    H3: Rescue Mission
-    H3: Our Legacy
-  H2: Let's Connect
-  H3: Dr. Phil Good, DVM (footer)
-    H4: Quick Links
-    H4: Contact
-    H4: Links
+reports/
+├── bricks-ui-ux-audit.md              # This report
+├── bricks-ui-ux-findings.json         # Structured findings
+├── screenshots/
+│   ├── landing-desktop-full.png
+│   ├── landing-desktop-hero.png
+│   ├── landing-tablet-full.png
+│   ├── landing-mobile-full.png
+│   ├── landing-mobile-hero.png
+│   ├── service-desktop-full.png
+│   ├── service-desktop-hero.png
+│   ├── service-tablet-full.png
+│   ├── service-mobile-full.png
+│   └── service-mobile-hero.png
+└── raw-data/
+    ├── discovery.json
+    ├── brief-fidelity.json
+    └── playwright-findings.json
 ```
-- Clean, logical hierarchy with no skipped levels
-- Single H1 establishes page topic
-- Footer H3 is acceptable convention
-
-#### Hero Section
-- **Headline:** "Dr. Phil Good, DVM" (42.6px, white, bold 800)
-- **Subtitle:** "Veterinarian · Rescue Advocate · Father" (18px, white)
-- **Description:** Leading Beyond Pets... since 1979 (18px, white 95% opacity)
-- **Primary CTA:** "Learn My Story" (blue #2563EB, 16px, links to /about-me/)
-- **Secondary CTA:** "Book Appointment" (outlined white, links to beyondpets.com)
-- **Background:** ClinicMainPic.jpg with dark blue overlay
-
-**Strengths:** Clear value proposition, two differentiated CTAs, dark overlay ensures readability.
-**Weaknesses:** Background image shows old "Town & Country" signage — feels dated. No photo of Dr. Good himself. Hero is 100vh tall, pushing content below fold.
-
-#### Content Sections
-- **What I Do Cards:** Three vertical cards (My Practice, Rescue Mission, Our Legacy) with Themify icons, descriptions, and "Learn More" links
-- **Stats Bar:** Dark navy background with "45+", "20,000+", "1" stats — clean and impactful
-- **Quote:** Personal quote from Dr. Good with decorative styling. NOTE: Opening quote renders as raw unicode `201C` instead of a styled quotation mark
-- **CTA:** "Let's Connect" with dark overlay background, centered "Get in Touch" button
-- **Footer:** 4-column layout (bio, quick links, contact info, external links)
-
-### My Practice Page (/my-practice/)
-
-#### Heading Structure (EXCELLENT)
-```
-H1: Beyond Pets Animal Hospital
-  H2: A Practice Built on Family
-  H2: Our Services
-    H3: Wellness & Prevention
-    H3: Internal Medicine
-    H3: Surgery
-    H3: Dentistry
-    H3: Ultrasound & Diagnostics
-    H3: Boarding & Grooming
-  H2: Training the Next Generation
-  H2: Schedule a Visit
-```
-- Perfect semantic hierarchy
-- Each service gets proper H3 under H2 "Our Services"
-- "Schedule a Visit" CTA has appropriate H2 weight
-
-#### Hero Section
-- **Headline:** "Beyond Pets Animal Hospital" (42.6px, white)
-- **Subtitle:** "Formerly Town & Country Veterinary Hospital · Serving Marietta Since 1979"
-- **Background:** Same ClinicMainPic.jpg as home page
-
-**Issue:** Same hero image as home — page feels repetitive. No CTA buttons in hero.
-
-#### Content Sections
-- **About:** "A Practice Built on Family" — text + clinic photo. Good use of image/text layout.
-- **Services:** 6 service cards with icons (heart, stethoscope, scissors, tooth, ultrasound, pet) — clean, centered, single-column
-- **Training:** Text section about teaching veterinary students
-- **CTA:** "Schedule a Visit" with dark background, link to beyondpets.com
-
----
-
-## 5. Viewport-by-Viewport Findings
-
-### Desktop (1440x900)
-
-| Criterion | Rating | Notes |
-|-----------|--------|-------|
-| Hero effectiveness | Good | Clear hierarchy, readable CTAs |
-| Content layout | Fair | Cards underutilize 1200px width — single column instead of 3-col grid |
-| Navigation | Good | Horizontal links, clear active state (underline on current page) |
-| Typography | Good | 18px body, strong heading scale |
-| Image quality | Fair | Hero image dated, logo oversized (848px for 141px display) |
-| Spacing | Good | Consistent section padding, 8px grid followed |
-
-### Tablet (768x1024)
-
-| Criterion | Rating | Notes |
-|-----------|--------|-------|
-| Hero effectiveness | Good | Hamburger menu appears, text remains centered and readable |
-| Content layout | Good | Cards stack cleanly, same as desktop (already single-col) |
-| Navigation | Good | Clean hamburger transition |
-| Stats section | Good | Numbers wrap or stack appropriately |
-| Footer | Good | Columns wrap to fit viewport |
-
-### Mobile (390x844)
-
-| Criterion | Rating | Notes |
-|-----------|--------|-------|
-| Hero effectiveness | Good | Text adjusts well, CTAs stack vertically, remain tappable |
-| Content layout | Good | Single-column cards with generous touch targets |
-| No horizontal overflow | Pass | scrollWidth === clientWidth === 390 |
-| Footer | Good | Stacks to single column |
-| Service cards | Good | Centered icons with readable text |
-| CTA buttons | Good | Full-width, easy to tap |
-
----
-
-## 6. What Is Working Well
-
-1. **Heading hierarchy** — Both pages have clean, logical heading structures with no skipped levels
-2. **Body text contrast** — rgb(51, 65, 85) on white = 7.58:1 ratio (excellent)
-3. **Heading contrast** — rgb(15, 23, 42) on white = 17.58:1 ratio
-4. **Performance** — FCP at ~1.7s, well under the 2.5s LCP target
-5. **No horizontal overflow** — Verified on all 3 viewports for both pages
-6. **Responsive navigation** — Clean transition from horizontal nav to hamburger menu
-7. **Footer layout** — Adapts well from 4-col (desktop) to stacked (mobile)
-8. **Skip links** — Present for "Skip to main content" and "Skip to footer"
-9. **Button styling** — Primary (filled blue) and secondary (outlined) CTAs are well-differentiated
-10. **Image alt text** — Logo and content images have descriptive alt attributes
-
----
-
-## 7. What Is Not Working Well
-
-1. **Scroll-reveal animations block automated screenshots** — Content at opacity: 0 until scrolled, making full-page screenshots appear blank
-2. **Hero image is dated** — Shows old "Town & Country Veterinary Clinic" signage with cars in parking lot. Not aspirational for a professional biography site
-3. **Hero image reused across pages** — Home and My Practice use the same ClinicMainPic.jpg
-4. **Home page cards are single-column on desktop** — Wastes 1200px content width that could display 3 cards side by side
-5. **Quote section unicode glitch** — Opening quotation mark renders as raw "201C" text instead of styled character
-6. **Logo PNG massively oversized** — 848x240px PNG served for 141x40px display (6x oversized). No WebP/AVIF, no srcset
-7. **15+ third-party scripts loaded** — GSAP, ScrollTrigger, ScrollSmoother, Swup (5 sub-libraries), New Relic, Google Analytics, BricksForge, BricksExtras for a brochure site
-8. **Skip link contrast fails** — 2.67:1 ratio (needs 4.5:1)
-9. **No hero CTA on My Practice page** — Hero section has no call-to-action buttons
-10. **Cards use div-based markup** — No semantic article/section elements for card patterns
-
----
-
-## 8. High-Confidence Fixes (Not Applied)
-
-Since the Bricks MCP server was not connected, no fixes could be applied. The following would be applied if write access were available:
-
-| Fix | Effort | Impact |
-|-----|--------|--------|
-| Fix quote section "201C" unicode rendering | Low | Eliminates visual glitch |
-| Add 3-column grid to home page cards on desktop | Medium | Better use of horizontal space |
-| Optimize logo PNG (serve at 282x80 or SVG) | Low | Faster LCP, less bandwidth |
-| Add preload hint for hero background image | Low | Faster LCP |
-| Fix skip link contrast (darker background or lighter text) | Low | WCAG AA compliance |
-| Add CTA buttons to My Practice hero | Low | Better conversion funnel |
-
----
-
-## 9. Priority Recommendations for Bricks MCP Workflow
-
-### Critical
-1. **Connect Bricks MCP server** — Without it, zero automated page creation or modification is possible. This is the foundational requirement.
-
-### High
-2. **Add animation-disable mode for auditing** — Scroll-reveal animations make automated visual QA impossible. Need a render mode that forces all elements visible.
-3. **Image optimization pipeline** — Auto-generate srcset, WebP/AVIF, warn on oversized images, encourage unique images per page.
-4. **Responsive grid defaults for card patterns** — Page blueprints should generate 3-col desktop / 2-col tablet / 1-col mobile grids for cards.
-5. **Post-generation audit loop** — After creating a page, automatically run heading check, contrast scan, overflow test, and CLS measurement.
-
-### Medium
-6. **Performance guardrails** — Warn when page loads 10+ scripts. Identify unused JS libraries per page.
-7. **Semantic HTML templates** — Cards as `<article>`, sections with proper landmarks, admin labels as aria-labels.
-8. **Quote section template fix** — Use CSS ::before for decorative quotes instead of raw unicode characters.
-9. **Skip link accessibility defaults** — Default styling should pass WCAG AA.
-10. **Example prompt library** — Provide tested prompts for common page types (landing, service, about, contact).
-
----
-
-## 10. Recommended Guardrails for Single-Prompt Generation
-
-To reliably produce beautiful pages from a single prompt, the Bricks MCP workflow should enforce:
-
-1. **Heading hierarchy validation** — No skipped levels, single H1, logical nesting
-2. **Contrast minimum** — All text/background combinations >= 4.5:1 (AA normal text)
-3. **Image optimization** — Max 2x display size, WebP/AVIF format, alt text required
-4. **Responsive grid** — Card/feature sections use responsive grid by default
-5. **Hero requirements** — At least one CTA, text contrast verified against background
-6. **Overflow check** — Verify scrollWidth === clientWidth on mobile before completion
-7. **Animation safety** — Ensure content is visible without JS. Respect prefers-reduced-motion
-8. **Script budget** — Warn if total JS exceeds 200KB compressed
-9. **Semantic HTML** — Use article, section, nav, main, footer elements appropriately
-10. **Admin labels** — Auto-assign stable labels to all section-level elements for deterministic updates
-
----
-
-## 11. Remaining Uncertainties & Manual Review Items
-
-| Item | Why Manual Review Needed |
-|------|-------------------------|
-| Hero text contrast on image backgrounds | Cannot be programmatically measured — estimated at 7:1+ based on visual inspection of dark overlay |
-| prefers-reduced-motion support | Could not verify if animations are disabled for users with motion sensitivity |
-| Mobile menu usability | Hamburger menu exists but was not tested for open/close behavior |
-| Touch target sizes | Card "Learn More" links appear small (14px font, ~45px height) — needs finger-tap testing |
-| Form accessibility | Contact page not audited — forms need label/error state review |
-| SEO meta tags | Rank Math active but meta descriptions not inspected |
-| Real-world LCP | Lab FCP was ~1.7s but real-world LCP with images may differ |
-| CLS on slow connections | No layout shift observed on fast connection, but deferred images may cause shifts |
-
----
-
-## 12. Screenshots Reference
-
-All screenshots saved to `reports/screenshots/`:
-
-### Home Page
-| Viewport | Files |
-|----------|-------|
-| Desktop | `home-dt-01-hero.png` through `home-dt-07-footer.png` |
-| Tablet | `home-tab-01-hero.png` through `home-tab-05-cta-footer.png` |
-| Mobile | `home-mob-01-hero.png` through `home-mob-06-cta.png` |
-
-### My Practice Page
-| Viewport | Files |
-|----------|-------|
-| Desktop | `practice-dt-01-hero.png` through `practice-dt-06-footer.png` |
-| Tablet | `practice-tab-01-hero.png` through `practice-tab-04-cta-footer.png` |
-| Mobile | `practice-mob-01-hero.png` through `practice-mob-05-cta-footer.png` |
-
-### Raw Data
-- `reports/raw-data/home-network.txt` — Full network request log
-- `reports/bricks-ui-ux-findings.json` — Structured findings data
-
----
-
-*Report generated by Claude Code (Opus 4.6) using Playwright MCP for browser automation. No Bricks MCP tools were available for page creation or modification.*

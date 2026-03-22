@@ -1,0 +1,174 @@
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#brx-content"
+  - link "Skip to footer" [ref=e3] [cursor=pointer]:
+    - /url: "#brx-footer"
+  - generic [ref=e4]:
+    - banner [ref=e5]:
+      - banner [ref=e6]:
+        - generic [ref=e7]:
+          - link "Dr. Phil Good, DVM" [ref=e8] [cursor=pointer]:
+            - /url: /
+            - generic [ref=e9]: Dr. Phil Good, DVM
+          - button "Open mobile menu" [ref=e11] [cursor=pointer]
+    - generic [ref=e15]:
+      - main [ref=e16]:
+        - generic [ref=e18]:
+          - generic [ref=e19]:
+            - generic [ref=e20]: VETERINARIAN & ANIMAL RESCUE ADVOCATE
+            - heading "Compassionate Care for Every Animal" [level=1] [ref=e21]
+            - paragraph [ref=e23]: For over 45 years, Dr. Phil Good has dedicated his life to exceptional veterinary medicine and giving rescue animals a second chance in Marietta, Georgia.
+            - generic [ref=e24]:
+              - paragraph [ref=e26]:
+                - link "Schedule a Visit" [ref=e27] [cursor=pointer]:
+                  - /url: /contact-me/
+              - paragraph [ref=e29]:
+                - link "Learn Our Story" [ref=e30] [cursor=pointer]:
+                  - /url: /about-me/
+            - paragraph [ref=e32]: 45+ Years • 10,000+ Animals • Marietta, GA
+          - img "Dr. Phil Good, DVM - Veterinarian in Marietta, Georgia" [ref=e33]
+        - generic [ref=e35]:
+          - generic [ref=e36]:
+            - generic [ref=e37]: 45+
+            - paragraph [ref=e39]: Years Experience
+          - generic [ref=e40]:
+            - generic [ref=e41]: 10,000+
+            - paragraph [ref=e43]: Animals Treated
+          - generic [ref=e44]:
+            - generic [ref=e45]: 3,000+
+            - paragraph [ref=e47]: Rescues
+          - generic [ref=e48]:
+            - generic [ref=e49]: "1"
+            - paragraph [ref=e51]: Mission
+        - generic [ref=e53]:
+          - img "Dr. Phil Good examining a rescue cat at Homeless Pets Foundation" [ref=e54]
+          - generic [ref=e55]:
+            - generic [ref=e56]: ABOUT DR. GOOD
+            - heading "A Lifetime Devoted to Animals" [level=2] [ref=e57]
+            - paragraph [ref=e59]: "From a childhood spent caring for every stray that crossed his path to building one of Marietta’s most trusted veterinary practices, Dr. Phil Good’s journey has always been guided by one principle: every animal deserves compassion."
+            - paragraph [ref=e61]:
+              - link "Read My Full Story →" [ref=e62] [cursor=pointer]:
+                - /url: /about-me/
+        - generic [ref=e64]:
+          - generic [ref=e65]: WHAT WE DO
+          - heading "Full-Service Veterinary Care" [level=2] [ref=e66]
+          - generic [ref=e67]:
+            - generic [ref=e68]:
+              - heading "Wellness & Prevention" [level=3] [ref=e69]
+              - paragraph [ref=e71]: Annual exams, vaccinations, parasite prevention, and nutrition counseling to keep your pet healthy for years to come.
+              - paragraph [ref=e73]:
+                - link "Learn More →" [ref=e74] [cursor=pointer]:
+                  - /url: /my-practice/
+            - generic [ref=e75]:
+              - heading "Surgery & Dental" [level=3] [ref=e76]
+              - paragraph [ref=e78]: Safe surgical procedures, dental cleanings, and extractions performed with advanced monitoring and gentle recovery protocols.
+              - paragraph [ref=e80]:
+                - link "Learn More →" [ref=e81] [cursor=pointer]:
+                  - /url: /my-practice/
+            - generic [ref=e82]:
+              - heading "Diagnostics & Treatment" [level=3] [ref=e83]
+              - paragraph [ref=e85]: In-house lab work, digital radiography, and ultrasound for fast, accurate diagnoses and tailored treatment plans.
+              - paragraph [ref=e87]:
+                - link "Learn More →" [ref=e88] [cursor=pointer]:
+                  - /url: /my-practice/
+        - generic [ref=e90]:
+          - generic [ref=e91]:
+            - generic [ref=e92]: RESCUE & COMMUNITY
+            - heading "Giving Every Animal a Second Chance" [level=2] [ref=e93]
+            - paragraph [ref=e95]: Through the Homeless Pets Foundation, Dr. Good and his team have rescued, rehabilitated, and rehomed thousands of animals. Every life matters.
+            - paragraph [ref=e97]:
+              - link "Our Rescue Mission" [ref=e98] [cursor=pointer]:
+                - /url: /rescue-mission/
+          - img "Happy adopted dogs from the Homeless Pets Foundation" [ref=e99]
+        - generic [ref=e101]:
+          - img "Dr. Michael Good - Founder of Town and Country Veterinary Hospital" [ref=e102]
+          - generic [ref=e103]:
+            - generic [ref=e104]: OUR LEGACY
+            - heading "A Family Tradition of Caring" [level=2] [ref=e105]
+            - paragraph [ref=e107]: The Good family’s dedication to veterinary care began with Dr. Michael Good, whose vision and compassion laid the foundation for everything we do today. Three generations later, that legacy continues to grow.
+            - paragraph [ref=e109]:
+              - link "Explore Our Full Story →" [ref=e110] [cursor=pointer]:
+                - /url: /our-legacy/
+        - generic [ref=e112]:
+          - generic [ref=e113]: TESTIMONIALS
+          - heading "What Our Community Says" [level=2] [ref=e114]
+          - generic [ref=e115]:
+            - generic [ref=e116]:
+              - paragraph [ref=e117]: “
+              - paragraph [ref=e119]: Dr. Good treats every animal like family. After 20 years as a client, I wouldn’t trust anyone else with our pets.
+              - paragraph [ref=e121]:
+                - strong [ref=e122]: Sarah M.
+                - text: Client since 2004
+            - generic [ref=e123]:
+              - paragraph [ref=e124]: “
+              - paragraph [ref=e126]: The rescue work this team does is incredible. We adopted our dog through HPF and she’s been the best addition to our family.
+              - paragraph [ref=e128]:
+                - strong [ref=e129]: James & Lisa T.
+                - text: HPF adopter
+            - generic [ref=e130]:
+              - paragraph [ref=e131]: “
+              - paragraph [ref=e133]: Beyond Pets truly goes above and beyond. The care, attention, and genuine love they show is unlike any vet we’ve experienced.
+              - paragraph [ref=e135]:
+                - strong [ref=e136]: Maria K.
+                - text: Marietta resident
+        - generic [ref=e138]:
+          - heading "Ready to Experience Compassionate Care?" [level=2] [ref=e139]
+          - paragraph [ref=e141]: Whether your pet needs a routine checkup or you’re looking to get involved in our rescue mission, we’d love to hear from you.
+          - generic [ref=e142]:
+            - paragraph [ref=e144]:
+              - link "Schedule a Visit" [ref=e145] [cursor=pointer]:
+                - /url: /contact-me/
+            - paragraph [ref=e147]:
+              - link "Contact Us" [ref=e148] [cursor=pointer]:
+                - /url: /contact-me/
+      - contentinfo [ref=e149]:
+        - contentinfo [ref=e150]:
+          - generic [ref=e151]:
+            - generic [ref=e152]:
+              - heading "Dr. Phil Good, DVM" [level=3] [ref=e153]
+              - paragraph [ref=e155]: Veterinarian & animal rescue advocate in Marietta, Georgia.
+            - generic [ref=e156]:
+              - heading "Navigate" [level=4] [ref=e157]
+              - generic [ref=e158]:
+                - paragraph [ref=e159]:
+                  - link "About" [ref=e160] [cursor=pointer]:
+                    - /url: /about-me/
+                - paragraph [ref=e161]:
+                  - link "Practice" [ref=e162] [cursor=pointer]:
+                    - /url: /my-practice/
+                - paragraph [ref=e163]:
+                  - link "Rescue" [ref=e164] [cursor=pointer]:
+                    - /url: /rescue-mission/
+                - paragraph [ref=e165]:
+                  - link "Legacy" [ref=e166] [cursor=pointer]:
+                    - /url: /our-legacy/
+                - paragraph [ref=e167]:
+                  - link "News" [ref=e168] [cursor=pointer]:
+                    - /url: /news/
+                - paragraph [ref=e169]:
+                  - link "Contact" [ref=e170] [cursor=pointer]:
+                    - /url: /contact-me/
+            - generic [ref=e171]:
+              - heading "Connect" [level=4] [ref=e172]
+              - generic [ref=e173]:
+                - paragraph [ref=e174]:
+                  - text: 1343 Gresham Road
+                  - text: Marietta, GA 30062
+                - paragraph [ref=e175]:
+                  - link "(404) 939-1838" [ref=e176] [cursor=pointer]:
+                    - /url: tel:+14049391838
+                - paragraph [ref=e177]:
+                  - link "beyondpets.com" [ref=e178] [cursor=pointer]:
+                    - /url: https://beyondpets.com
+                - paragraph [ref=e179]:
+                  - link "homelesspets.com" [ref=e180] [cursor=pointer]:
+                    - /url: https://homelesspets.com
+            - generic [ref=e181]:
+              - heading "Hours" [level=4] [ref=e182]
+              - paragraph [ref=e184]:
+                - text: "Mon–Thu: 7:30a – 6:30p"
+                - text: "Fri: 7:30a – 6:00p"
+                - text: "Sat: 8:00a – 3:00p"
+                - text: "Sun: Closed"
+          - paragraph [ref=e187]: © 2026 Dr. Phil Good, DVM
+  - paragraph [ref=e188]
