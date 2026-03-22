@@ -223,11 +223,13 @@ For each page or major section:
 - 13 global classes created: section backgrounds, cards, buttons (primary/ghost/secondary), overline, photo-frame, heading-display
 - CTA style: green pill buttons (#047857), ghost white for dark sections
 
-### Phase 1 — Header & Footer Templates (Complete, Redesigned 2026-03-21)
-- Header: sticky auto-hide on scroll, text-only "Dr. Phil Good, DVM" logo (22px/800), 5 nav links (About, Practice, Rescue, Legacy, Contact)
-- No image logo, no "Schedule a Visit" CTA button — personal brand header, not clinic
+### Phase 1 — Header & Footer Templates (Complete, Redesigned 2026-03-21, Logo Updated 2026-03-22)
+- Header: sticky auto-hide on scroll, full-width container (`padding: 0 48px`), `space-between` layout. Image logo left (`hdr006`, `order: -1`), nav-menu right (`hdr010`, `order: 1`). 5 nav links.
+- Logo: transparent PNG (attachment 1787), 195x65px desktop (3:1 aspect), ~132x44px mobile. Source: `docs/Dr Phil Good Logo.png`. Background removed via color-distance thresholding, manually cropped to y:720-1520 (excludes bottom-right watermark).
+- **Logo wrapper removed:** Original `hdr003` container (rendered as `<a>` tag) caused a Bricks rendering bug — child image elements render outside `tag: "a"` containers, leaving an empty 0-width anchor. Fixed by removing `hdr003` and placing `hdr006` directly in `hdr002` with its own `link` setting.
+- Favicon: attachment 1788 (512x512, icon-only crop), set via `site_icon` WordPress option
 - Nav links: Inter 15px/500, color `#1F2937`, active state blue underline (`#1E40AF`)
-- Mobile: "Dr. Phil Good, DVM" visible at 17px + hamburger (name was previously hidden)
+- Mobile: Logo image 44px height + hamburger, left-aligned
 - Footer: 3-column on #0F172A — Navigate (all page links), Connect (address/phone/websites), Hours
 - Brand section: "Dr. Phil Good, DVM" + one-line tagline, no "Beyond Pets Animal Hospital" tag
 - Copyright simplified to "© 2026 Dr. Phil Good, DVM"
