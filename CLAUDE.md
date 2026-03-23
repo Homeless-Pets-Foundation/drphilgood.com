@@ -104,13 +104,11 @@ When setting up or modifying the design system:
 - Validate design consistency with `validate-design-system` (37-check validation)
 
 ### Quality Workflow
-For each page or major section:
-1. Build with blueprints or templates as a starting point
-2. Customize content and styling to match brand guidelines
-3. Run beauty scoring to identify aesthetic improvements
-4. Use render tools to verify cross-breakpoint consistency
-5. Validate against the design system
-6. Apply fixes via `apply-fix-batch` for any issues found
+Follow the **Bricks MCP Design Workflow Protocol** in the global CLAUDE.md (Intake → Build → Render Review → Polish). For this site, the CLAUDE.md already contains brand identity, design phases, and content details — pass those directly to `bricks/design-intake` instead of re-prompting. Key site-specific quality notes:
+- Target `production` quality tier (score >= 85, hero >= 70) — this site has been through 4 audit rounds
+- ACSS is active with warm-clinical Style DNA profile
+- CTA style: green pill buttons (#047857)
+- Always run Playwright render review across desktop, tablet, and mobile after every build
 
 ### Bricks MCP Critical Rules (learned from experience)
 
