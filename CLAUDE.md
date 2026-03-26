@@ -110,6 +110,18 @@ Follow the **Bricks MCP Design Workflow Protocol** in the global CLAUDE.md (Inta
 - CTA style: green pill buttons (#047857)
 - Always run Playwright render review across desktop, tablet, and mobile after every build
 
+### Site Chrome Safety (DEFAULT PRESERVE)
+
+- Preserve the existing site header/footer templates by default on standard pages.
+- Do NOT create page-body replacement nav/footer sections for normal pages.
+- Do NOT hide `#brx-header` or `#brx-footer` in sandbox CSS unless explicitly asked for a standalone landing page.
+- Before changing site chrome behavior, inspect the template chain and confirm the user wants a standalone shell.
+- If standalone chrome is explicitly approved, document that choice and keep it isolated to that page.
+
+### Available Plugin Integrations
+
+The Bricks MCP plugin (v1.14.0+) includes an integration registry that auto-detects active third-party plugins and exposes additional tools. Use `tools/list` to see all currently available tools for this site.
+
 ### Bricks MCP Critical Rules (learned from experience)
 
 1. **Content key is `text`, NOT `_text`** — underscore-prefix keys are styling only. `_text` does NOT render content.
@@ -131,6 +143,10 @@ Follow the **Bricks MCP Design Workflow Protocol** in the global CLAUDE.md (Inta
 17. **`scroll_into_view` + `add_css_class` interactions are unreliable** — Bricks JS sets children to `opacity: 0` but the IntersectionObserver frequently fails to trigger the class addition, leaving content permanently invisible. Avoid using this pattern; prefer CSS-only animations or set content visible by default.
 18. **Global CSS changes invalidate all page content hashes** — updating `customCss` in `bricks_global_settings` changes the content hash for every page. Re-read pages after global CSS updates.
 19. **Playwright full-page screenshots break with reveal animations** — use viewport-size screenshots at key scroll positions instead of `fullPage: true`.
+20. **Header overflow clips dropdowns** — Sticky headers with `overflow: hidden` clip absolutely-positioned dropdown panels. Override with `overflow: visible !important` on the header section element.
+21. **`nav-menu` element defaults to mobile mode** — Without explicit breakpoint config, Bricks hides `.bricks-nav-menu-wrapper` and shows `.bricks-mobile-menu-toggle`. Add `_cssCustom` with `#brxe-{id} .bricks-nav-menu-wrapper { display: flex !important; }` to force full menu on desktop.
+22. **FlyingPress `lazy_render` can strip below-fold elements** — Add exclusions for sections that must always render (footers, CTAs).
+23. **Cloudflare email obfuscation mangles emails** — Disable "Email Address Obfuscation" in Cloudflare Scrape Shield settings if email elements show garbled text.
 
 ### Common Workflows
 
@@ -364,7 +380,7 @@ Previous round scored 88/100. Three remaining issues addressed:
 
 Previous round scored 91/100. Premium polish pass for $20K build quality:
 
-**Bricks MCP Plugin:** Updated to v1.13.2 (documentation improvements)
+**Bricks MCP Plugin:** Updated to v1.14.0 (integration registry, audit fixes, consistency pass)
 
 **Visual Polish (via global CSS appended):**
 - P-001: Testimonial quote marks enlarged from 18px to 64px with decorative muted styling (`rgba(30,64,175,0.15)`)
